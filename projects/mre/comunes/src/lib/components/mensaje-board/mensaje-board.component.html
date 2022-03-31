@@ -1,0 +1,7 @@
+<div class="mensajeBoard">
+  <div class="row"  *ngFor="let item of mensajesArr">
+    <div class="col-12 alert" [ngClass]="item.classMensaje" role="alert">
+      {{item.mensaje}}
+    </div>
+  </div>
+</div>

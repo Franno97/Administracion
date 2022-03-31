@@ -1,0 +1,249 @@
+<div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col col-md-6">
+        <h5 class="card-title">
+          Configuración de Firma Electrónica
+        </h5>
+      </div>
+      <div class="text-right col col-md-6">
+        <div class="text-lg-right pt-2">
+          <button 
+                  id="create"
+                  class="btn btn-primary"
+                  type="button"
+                  (click)="crear()">
+            <i class="fa fa-plus mr-1"></i>
+            <span>Nuevo</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <ngx-datatable [rows]="configuracionFirmaElectronica.items"
+     
+     [externalPaging]="true"
+     [count]="configuracionFirmaElectronica.totalRegistros" 
+     [limit]="maximoResultado"
+     (page)="setPaginacion($event)"
+
+
+     [externalSorting]="true"
+     (sort)="setOrdenamiento($event)"
+     [messages]="spanishNgxDatatableMessages"
+   
+     default>
+
+
+      <ngx-datatable-column [name]="'::Actions' | abpLocalization"
+                            [maxWidth]="150"
+                            [sortable]="false">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div ngbDropdown container="body" class="d-inline-block">
+            <button class="btn btn-primary btn-sm dropdown-toggle"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    ngbDropdownToggle>
+              <i class="fa fa-cog mr-1"></i>Opciones
+            </button>
+            <div ngbDropdownMenu>
+              <button  ngbDropdownItem
+                      (click)="editar(row.id)">
+                Editar
+              </button>
+              <button  ngbDropdownItem
+                      (click)="borrar(row.id)">
+                Borrar
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Servicio" prop="servicioNombre"  [sortable]="true"></ngx-datatable-column>
+      <ngx-datatable-column name="Tipo de Documento" prop="tipoDocumentoCodigo"  [sortable]="true"></ngx-datatable-column>
+      <ngx-datatable-column name="Modelo de Firma"  cellClass="text-center" prop="modeloFirma" [sortable]="false" >
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <ng-container [ngSwitch]="row.modeloFirma">
+            <span *ngSwitchCase="'QR'">{{getDescripcion(row.modeloFirma)}}</span>
+            <span *ngSwitchCase="'INFO1'">{{getDescripcion(row.modeloFirma)}}</span>
+            <span *ngSwitchCase="'INFO2'">{{getDescripcion(row.modeloFirma)}}</span>
+            <span *ngSwitchCase="'INFO3'">{{getDescripcion(row.modeloFirma)}}</span> 
+          </ng-container>
+        </ng-template>
+      </ngx-datatable-column>
+
+
+      <ngx-datatable-column name="Tamaño" prop="tamanioFirma"  [sortable]="false" cellClass="text-center" ></ngx-datatable-column>
+  
+    
+      <ngx-datatable-column name="Posición (X-Y)" [sortable]="false" cellClass="text-center" >
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.posicionX}}-{{row.posicionY}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Número de Página" prop="numeroPagina" cellClass="text-center"  [sortable]="false"></ngx-datatable-column>
+  
+    </ngx-datatable>
+  </div>
+</div>
+
+
+<abp-modal size="md" [(visible)]="isModalOpen" [busy]="modalBusy">
+  <ng-template #abpHeader>
+    <h3>{{ (configuracionFirmaElectronicaSeleccionada.id ? 'Editar' : 'Nuevo') }}</h3>
+  </ng-template>
+
+  <ng-template #abpBody>
+    <form id="editForm" [formGroup]="form" (ngSubmit)="save()">
+
+    <div class="form-group">
+        <label for="servicioId">Servicio</label>
+        <select class="form-control" id="servicioId" formControlName="servicioId" (change)="cambiaServicio($event)">
+            <option [ngValue]="null" disabled>{{'::SelectValue' | abpLocalization }}</option>
+            <option [ngValue]="servicio.id" *ngFor="let servicio of servicios"> {{ servicio.nombre }}</option>
+        </select>
+        <div
+            *ngIf="form.controls['servicioId'].invalid && (form.controls['servicioId'].dirty || form.controls['servicioId'].touched || submitted)">
+            <small class="text-danger" *ngIf="form.controls['servicioId'].errors?.required">
+                {{'::RulesValidationMessage:Required' | abpLocalization }}
+            </small>
+        </div>
+    </div>
+
+    <div class="form-group">
+      <label for="tipoDocumentoCodigo">Tipo de Documento</label>
+      <select class="form-control" id="tipoDocumentoCodigo" formControlName="tipoDocumentoCodigo">
+          <option [ngValue]="null" disabled>{{'::SelectValue' | abpLocalization }}</option>
+          <option [ngValue]="catalogo.codigo" *ngFor="let catalogo of catalogoTipoDocumentos"> {{ catalogo.descripcion }}
+          </option>
+      </select>
+      <div
+          *ngIf="form.controls['tipoDocumentoCodigo'].invalid && (form.controls['tipoDocumentoCodigo'].dirty || form.controls['tipoDocumentoCodigo'].touched || submitted)">
+          <small class="text-danger" *ngIf="form.controls['tipoDocumentoCodigo'].errors?.required">
+              {{'::RulesValidationMessage:Required' | abpLocalization }}
+          </small>
+      </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="modeloFirma">Modelo de Firma</label>
+    <select class="form-control" id="modeloFirma" formControlName="modeloFirma">
+        <option [ngValue]="null" disabled>{{'::SelectValue' | abpLocalization }}</option>
+        <option [ngValue]="modelo.codigo" *ngFor="let modelo of modeloFirma"> {{ modelo.descripcion }}
+        </option>
+    </select>
+    <div
+        *ngIf="form.controls['modeloFirma'].invalid && (form.controls['modeloFirma'].dirty || form.controls['modeloFirma'].touched || submitted)">
+        <small class="text-danger" *ngIf="form.controls['modeloFirma'].errors?.required">
+            {{'::RulesValidationMessage:Required' | abpLocalization }}
+        </small>
+    </div>
+</div>
+
+  <div class="row">
+                <div class="col-md-6">  
+                  <div class="form-group">
+                    <label for="tamanioFirma">Tamaño de Firma</label>
+                    <input type="number" class="form-control" id="tamanioFirma" formControlName="tamanioFirma">
+                  
+                    <div
+                      *ngIf="form.controls['tamanioFirma'].invalid && (form.controls['tamanioFirma'].dirty || form.controls['tamanioFirma'].touched || submitted)">
+                  
+                      <small class="text-danger" *ngIf="form.controls['tamanioFirma'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                      </small>
+
+                      <small class="text-danger" *ngIf="form.controls['tamanioFirma'].errors?.min">
+                        {{'::RulesValidationMessage:Min' |
+                        abpLocalization:form.controls['tamanioFirma'].errors?.min.min }}
+                    </small>
+                
+                    <small class="text-danger" *ngIf="form.controls['tamanioFirma'].errors?.max">
+                        {{'::RulesValidationMessage:Max' |
+                        abpLocalization:form.controls['tamanioFirma'].errors?.max.max }}
+                    </small>
+
+                    </div>
+                  
+                  </div>
+                </div>
+                <div class="col-md-6"> <div class="form-group">
+                  <label for="numeroPagina">Número de Página</label>
+                  <input type="number" class="form-control" id="numeroPagina" formControlName="numeroPagina">
+                
+                  <div
+                    *ngIf="form.controls['numeroPagina'].invalid && (form.controls['numeroPagina'].dirty || form.controls['numeroPagina'].touched || submitted)">
+                
+                    <small class="text-danger" *ngIf="form.controls['numeroPagina'].errors?.required">
+                      {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+
+                    <small class="text-danger" *ngIf="form.controls['numeroPagina'].errors?.min">
+                      {{'::RulesValidationMessage:Min' |
+                      abpLocalization:form.controls['numeroPagina'].errors?.min.min }}
+                  </small>
+
+                  </div>
+                
+                </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="posicionX">Posición X</label>
+                    <input type="number" class="form-control" id="posicionX" formControlName="posicionX">
+                  
+                    <div
+                      *ngIf="form.controls['posicionX'].invalid && (form.controls['posicionX'].dirty || form.controls['posicionX'].touched || submitted)">
+                  
+                      <small class="text-danger" *ngIf="form.controls['posicionX'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                      </small>
+                    </div>
+                  
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="posicionY">Posición Y</label>
+                    <input type="number" class="form-control" id="posicionY" formControlName="posicionY">
+                  
+                    <div
+                      *ngIf="form.controls['posicionY'].invalid && (form.controls['posicionY'].dirty || form.controls['posicionY'].touched || submitted)">
+                  
+                      <small class="text-danger" *ngIf="form.controls['posicionY'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                      </small>
+                    </div>
+                  
+                  </div>
+                </div>
+              </div>
+
+
+
+ 
+  
+ 
+    </form>
+  </ng-template>
+
+  <ng-template #abpFooter>
+
+    <button type="button" class="btn btn-secondary" #abpClose>
+      Cancelar 
+    </button>
+
+    <abp-button iconClass="fa fa-check" (click)="guardar()">
+      Guardar 
+    </abp-button>
+
+  </ng-template>
+</abp-modal>
+
+

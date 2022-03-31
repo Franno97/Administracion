@@ -1,0 +1,33 @@
+<lib-form-template [formTitle]="formTitle" (clickedButtonClose)="onCloseModal()" hasButtonClose="true">
+  <div class="col" form-content>
+    <br />
+    <lib-datos-solicitante-shared [datosSolicitanteCompartido]="datosSolicitanteCompartido" *ngIf="visaTitular">
+    </lib-datos-solicitante-shared>
+    <lib-datos-beneficiario-shared [datosBeneficiarioCompartido]="datosBeneficiarioCompartido" hasConadis="true"
+      [visaTitular]="visaTitular">
+    </lib-datos-beneficiario-shared>
+    <hr>
+    <div class="col-12">
+      <div class="row">
+
+        <div class="col-md-6 col-sm-12">Componente Reconocimiento facial</div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <lib-observaciones [observacionesName]="observacionesName" [observacionesModel]="observacionesModel"
+            [observacionesAnteriores]="observacionesAnteriores" (observChange)="observChange($event)">
+          </lib-observaciones>
+        </div>
+
+      </div>
+      <div class="card-body">
+        <div class="row justify-content-end">
+          <div class="form-group">
+            <button class="btn btn-primary botonAlign" (click)="onSubmit()">Guardar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</lib-form-template>

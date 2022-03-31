@@ -1,0 +1,39 @@
+<lib-form-template [formTitle]="formTitle" hasButtonClose="true" (clickedButtonClose)="onCloseModal()">
+    <div class="col" form-content>
+        <br>
+        <lib-tabs-view [tabsHeader]="tabsHeader" (tabsVisited)="comprobarLinkVistados($event)" [cantTabs]=2>
+            <div tab0>
+                <lib-datos-solicitante-shared [datosSolicitanteCompartido]="datosSolicitanteCompartido"
+                    *ngIf="visaTitular"></lib-datos-solicitante-shared>
+                <lib-datos-beneficiario-shared [datosBeneficiarioCompartido]="datosBeneficiarioCompartido"
+                    hasConadis=true [visaTitular]="visaTitular">
+                </lib-datos-beneficiario-shared>
+            </div>
+            <lib-form-requisitios [tabDataSource]="tabDataSourceRequisitios" tab1 (rowClicked)="rowClicked($event)">
+            </lib-form-requisitios>
+        </lib-tabs-view>
+        <div class="row">
+            <div class="col-12">
+                <lib-agendar-cita [datosEntrada]="datosAgendarCitaEntrada"
+                    (cambioDatosFormulario)="cambioDatosFormularioCita($event)"></lib-agendar-cita>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-12">
+                <lib-observaciones [requisitos]="requisitos" [observacionesName]="observacionesName"
+                    [observacionesModel]="observacionesModel" [observacionesAnteriores]="observacionesAnteriores"
+                    (observChange)="observChange($event)"></lib-observaciones>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-end">
+                <div class="form-group">
+                    <button class="btn btn-primary botonAlign" (click)="onSubmit()"
+                        [disabled]="!linksVisitedAll && !formularioCitaValido">Guardar</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+</lib-form-template>

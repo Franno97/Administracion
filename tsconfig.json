@@ -1,0 +1,82 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2017",
+    "module": "es2020",
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "@proxy": [
+        "src/app/proxy/index.ts"
+      ],
+      "@proxy/*": [
+        "src/app/proxy/*"
+      ],
+      "@abp/ng.theme.basic": [
+        "projects/abp-ng.theme.basic/src/public-api.ts"
+      ],
+      "@abp/ng.theme.basic/testing": [
+        "projects/abp-ng.theme.basic/testing/src/public-api.ts"
+      ],
+      "@mre/auditoria-config": [
+        "projects/mre/auditoria-config/src/public-api.ts"
+      ],
+      "@mre/auditoria-config/proxy/*": [
+        "projects/mre/auditoria-config/src/lib/proxy/*"
+      ],
+      "@mre/catalogo": [
+        "projects/mre/catalogo/src/public-api.ts"
+      ],
+      "@mre/cita": [
+        "projects/mre/cita/src/public-api.ts"
+      ],
+      "@mre/cita/proxy/*": [
+        "projects/mre/cita/src/lib/proxy/*"
+      ],
+      "@mre/comunes": [
+        "projects/mre/comunes/src/public-api.ts"
+      ],
+      "@mre/consultor": [
+        "projects/mre/consultor/src/public-api.ts"
+      ],
+      "@mre/funcionario": [
+        "projects/mre/funcionario/src/public-api.ts"
+      ],
+      "@mre/perito": [
+        "projects/mre/consultor/src/public-api.ts"
+      ],
+      "@mre/registro-persona": [
+        "projects/mre/registro-persona/src/public-api.ts",
+      ],
+      "@mre/switch-funcionario-perito-consultor": [
+        "projects/mre/switch-funcionario-perito-consultor/src/public-api.ts"
+      ],
+      "@mre/tramite-configuracion": [
+        "projects/mre/tramite-configuracion/src/public-api.ts"
+      ],
+      "@mre/visa": [
+        "projects/mre/visa/src/public-api.ts"
+      ],
+      "@mre/administrative-unit": [
+        "projects/mre/administrative-unit/src/public-api.ts"
+      ],
+      "@mre/administrative-unit/proxy/*": [
+        "projects/mre/administrative-unit/src/lib/proxy/*"
+      ],
+      
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false
+  }
+}

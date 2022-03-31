@@ -1,0 +1,58 @@
+<div class="card-body">
+    <a (click)=toggleDatosSolicitante()>
+        <h3 class="card-title">Datos Solicitante</h3>
+    </a>
+    <!-- <h3 class="card-title">Datos Solicitante</h3> -->
+    <!-- <form [formGroup]="formData" *ngIf="mostrarDatosSolicitante">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <lib-input-field *ngFor="let item of arrField1" [formControlData]="formData"
+                    placeHolder={{item.placeHolder}} typeInput={{item.typeInput}} icon={{item.icon}}
+                    [formCtrlName]='item.formCtrolName' [disabledx]='item.disabledx'></lib-input-field>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">Dirección:</label>
+                <textarea class="form-control" rows="4" placeholder=""
+                    formControlName='direccionSolicitante'></textarea>
+                <lib-input-field *ngFor="let item of arrField2" [formControlData]="formData"
+                    placeHolder={{item.placeHolder}} typeInput={{item.typeInput}} icon={{item.icon}}
+                    [contentInfo]="item.contentInfo" [formCtrlName]='item.formCtrolName'></lib-input-field>
+            </div>
+        </div>
+    </form> -->
+
+    <div *ngIf="mostrarDatosSolicitante">
+        <div class="row">
+            <div class="col-2"><label class="font-weight-bolder">Nombres y Apellidos:</label></div>
+            <div class="col-4"><label>{{datosSolicitante.nombreCompleto}}</label></div>
+            <div class="col-2"><label class="font-weight-bolder">Dirección:</label></div>
+            <div class="col-4 "><label>{{datosSolicitante.direccion}}</label></div>
+        </div>
+        <div class="row">
+            <div class="col-2"><label class="font-weight-bolder">Cédula:</label></div>
+            <div class="col-4"><label>{{datosSolicitante.cedula}}</label></div>
+            <div class="col-2"><label class="font-weight-bolder">Nacionalidad:</label></div>
+            <div class="col-4"><label>{{datosSolicitante.nacionalidad}}</label></div>
+        </div>
+        <div class="row">
+            <div class="col-2"><label class="font-weight-bolder">País:</label></div>
+            <div class="col-4"><label>{{datosSolicitante.pais}}</label></div>
+            <div class="col-2"><label class="font-weight-bolder">Ciudad:</label></div>
+            <div class="col-4"><label>{{datosSolicitante.ciudad}}</label></div>
+        </div>
+        <div class="row">
+            <div class="col-2"><label class="font-weight-bolder">Teléfono:</label></div>
+            <div class="col-4"><label>{{datosSolicitante.telefono}}</label></div>
+            <div class="col-2"><label class="font-weight-bolder">País del Consulado / Unidad
+                    Administrativa:</label></div>
+            <div class="col-4"><label>{{datosSolicitante.paisUnidadAdministrativa}}</label></div>
+
+        </div>
+        <div class="row">
+            <div class="col-2"><label class="font-weight-bolder">Nombre Consulado / Unidad
+                    Administrativa:</label></div>
+            <div class="col-4"><label>{{datosSolicitante.nombreUnidadAdministrativa}}</label></div>
+        </div>
+    </div>
+
+</div>

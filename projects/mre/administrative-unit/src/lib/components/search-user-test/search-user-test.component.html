@@ -1,0 +1,26 @@
+<p>Search user test - typeahead </p>
+
+
+
+
+<ng-template #tplUser let-r="result" let-t="term">
+    User:{{r.userName}}  Names: {{r.name}} {{r.surname}}
+</ng-template>
+
+
+  <fieldset class="form-inline">
+    <div class="form-group">
+      <label for="typeahead-http">Search User:</label>
+      
+      <input type="text" class="form-control mx-sm-3" [class.is-invalid]="searchFailed"
+       [(ngModel)]="userSelect" [ngbTypeahead]="searchUser" placeholder="user search"
+       [resultTemplate]="tplUser" 
+       [inputFormatter]="formatterUser"
+       />
+
+      <small *ngIf="searching" class="form-text text-muted">searching...</small>
+      <div class="invalid-feedback" *ngIf="searchFailed">Sorry, suggestions could not be loaded.</div>
+    </div>
+  </fieldset>
+
+  <pre>userSelect: {{ userSelect | json }}</pre>

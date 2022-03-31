@@ -1,0 +1,51 @@
+<div class="card-body">
+
+    <h3 class="card-title">Datos domicilio beneficiario</h3>
+
+    <!-- <form [formGroup]="formData">
+        <div class="form-group">
+
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <lib-input-field *ngFor="let item of arrField1" [formControlData]="formData"
+                        placeHolder={{item.placeHolder}} typeInput={{item.typeInput}} icon={{item.icon}}
+                        [contentInfo]="item.contentInfo" [formCtrlName]='item.formCtrolName'></lib-input-field>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Dirección:</label>
+                    <textarea class="form-control" rows="4" placeholder=""
+                        formControlName='direccionDomicilioBeneficiario'></textarea>
+                    <lib-input-field [formControlData]="formData" placeHolder="Número teléfono de trabajo"
+                        typeInput="text" formCtrlName='telefonoTrabajoDomicilioBeneficiario' icon="fas fa-user-circle">
+                    </lib-input-field>
+                </div>
+            </div>
+        </div>
+    </form> -->
+
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">País domicilio:</label></div>
+        <div class="col-4"><label>{{datosDomicilioBeneficiario.pais}}</label></div>
+        <div class="col-2"><label class="font-weight-bolder">Provincia domicilio:</label></div>
+        <div class="col-4"><label>{{datosDomicilioBeneficiario.provincia}}</label></div>
+    </div>
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">Ciudad domicilio:</label></div>
+        <div class="col-4"><label>{{datosDomicilioBeneficiario.ciudad}}</label></div>
+        <div class="col-2"><label class="font-weight-bolder">Dirección:</label></div>
+        <div class="col-4"><label>{{datosDomicilioBeneficiario.direccion}}</label></div>
+    </div>
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">Número teléfono domicilio:</label>
+        </div>
+        <div class="col-4"><label>{{datosDomicilioBeneficiario.numeroTelefono}}</label></div>
+        <div class="col-2"><label class="font-weight-bolder">Número teléfono celular:</label></div>
+        <div class="col-4"><label>{{datosDomicilioBeneficiario.numeroCelular}}</label></div>
+    </div>
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">Número teléfono de trabajo:</label>
+        </div>
+        <div class="col-4"><label>{{datosDomicilioBeneficiario.numeroTelefonoTrabajo}}</label></div>
+    </div>
+
+</div>

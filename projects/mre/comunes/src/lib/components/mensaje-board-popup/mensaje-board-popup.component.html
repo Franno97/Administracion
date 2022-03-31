@@ -1,0 +1,25 @@
+<div class="mensajePopup">
+
+        <lib-form-template [formTitle] = "dataObj.formTitle" hasButtonClose=true (clickedButtonClose)="onCloseModal()" closeControl= true> 
+            <div form-content>
+                 <div class="row">
+                     <div class="col-12">
+                        <div class="alert">
+                            {{dataObj.mensaje}}
+                           <div class="option">
+                              {{dataObj.option}} 
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-12">
+                        <div class="row justify-content-end">
+                            <div class="botonAlign">
+                                <button  class ="btn btn-danger" (click)="onCloseModal()">Cancelar</button>
+                                <button  class ="btn btn-primary" (click)="onCloseModalAceptar()">Aceptar</button>
+                            </div>
+                        </div>
+                     </div>   
+                 </div>
+            </div>
+          </lib-form-template>
+</div>

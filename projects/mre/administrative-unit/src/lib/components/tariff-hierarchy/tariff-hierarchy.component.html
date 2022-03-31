@@ -1,0 +1,171 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col col-md-6">
+                <h5 class="card-title">
+                    {{ '::Menu:TariffHierarchy' | abpLocalization }} [{{arancelDescripcion}}]
+                </h5>
+            </div>
+            <div class="text-right col col-md-6">
+                <div class="text-lg-right pt-2">
+                    <button description="create" class="btn btn-primary" type="button" (click)="createTariffHierarchy()">
+            <i class="fa fa-plus mr-1"></i>
+            <span>{{ '::New' | abpLocalization }}</span>
+          </button>
+
+                    <button type="button" class="btn btn-secondary ml-2" routerLink="/tariff/"><i class="fa fa-arrow-left"
+            aria-hidden="true"></i>
+          {{ '::Back' | abpLocalization }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <ngx-datatable [rows]="tariffHierarchy.items" [count]="tariffHierarchy.totalCount" [list]="list" default>
+            <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="150" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div ngbDropdown container="body" class="d-inline-block">
+                        <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" ngbDropdownToggle>
+              <i class="fa fa-cog mr-1"></i>{{ '::Actions' | abpLocalization }}
+            </button>
+                        <div ngbDropdownMenu>
+                            <button ngbDropdownItem (click)="editTariffHierarchy(row.id)">
+                                {{ '::Edit' | abpLocalization }}
+                            </button>
+                            <button ngbDropdownItem (click)="delete(row.id)">
+                                {{ '::Delete' | abpLocalization }}
+                            </button>
+                            <button ngbDropdownItem>
+                                <a routerLink="/jerarquia/agregar-partida/{{row.id}}/{{row.descripcion}}">{{ 'AdministrativeUnit::Menu:TariffHeading' | abpLocalization }}</a>
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column [name]="'AdministrativeUnit::TariffHierarchy:Description' | abpLocalization" prop="descripcion">
+            </ngx-datatable-column>
+
+            <ngx-datatable-column [name]="'AdministrativeUnit::TariffHierarchy:TariffType' | abpLocalization" prop="tipoArancel">
+            </ngx-datatable-column>
+
+            <ngx-datatable-column [name]="'AdministrativeUnit::TariffHierarchy:Order' | abpLocalization" prop="orden">
+            </ngx-datatable-column>
+
+            <ngx-datatable-column [name]="'AdministrativeUnit::TariffHierarchy:HierarchyNumber' | abpLocalization" prop="numeroJerarquia">
+            </ngx-datatable-column>
+
+        </ngx-datatable>
+    </div>
+</div>
+
+<abp-modal size="md" [(visible)]="isModalOpen" [busy]="modalBusy">
+    <ng-template #abpHeader>
+        <h3>{{ (selectedTariffHierarchy.id ? '::Edit' : '::New') | abpLocalization }}</h3>
+    </ng-template>
+
+    <ng-template #abpBody>
+        <form id="editForm" [formGroup]="form" (ngSubmit)="save()">
+
+            <div class="form-group">
+                <label for="arancel">{{'AdministrativeUnit::TariffHierarchy:Tariff' | abpLocalization }}</label><small class="text-danger"> * </small>
+                <input type="Text" class="form-control" description="arancel" formControlName="arancel" disabled="true">
+            </div>
+
+            <div class="form-group">
+                <label for="currency-id">{{'AdministrativeUnit::TariffHierarchy:TariffType' | abpLocalization }}</label><small class="text-danger"> * </small>
+                <select class="form-control" id="tariff-type-id" formControlName="tipoArancelId">
+                    <option [ngValue]="null" disabled>{{'::SelectValue' | abpLocalization }}</option>
+                    <option [ngValue]="t.id" *ngFor="let t of tariffType"> {{ t.nombre }}</option>
+                </select>
+                <div *ngIf="form.controls['tipoArancelId'].invalid && (form.controls['tipoArancelId'].dirty || form.controls['tipoArancelId'].touched || submitted)">
+                    <small class="text-danger" *ngIf="form.controls['tipoArancelId'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">{{'AdministrativeUnit::TariffHierarchy:Description' | abpLocalization }}</label><small class="text-danger"> * </small>
+                <input type="Text" class="form-control" description="description" formControlName="descripcion">
+
+                <div *ngIf="form.controls['descripcion'].invalid && (form.controls['descripcion'].dirty || form.controls['descripcion'].touched || submitted)">
+
+                    <small class="text-danger" *ngIf="form.controls['descripcion'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+
+                    <small class="text-danger" *ngIf="form.controls['descripcion'].errors?.minLength">
+                        {{'::RulesValidationMessage:Minimum' |
+                        abpLocalization:form.controls['descripcion'].errors?.minLength.requiredLength
+                        }}
+                    </small>
+
+                    <small class="text-danger" *ngIf="form.controls['descripcion'].errors?.maxlength">
+                        {{'::RulesValidationMessage:Maximum' |
+                        abpLocalization:form.controls['descripcion'].errors?.maxlength.requiredLength
+                        }}
+                    </small>
+
+                    <small class="text-danger" *ngIf="form.controls['descripcion'].errors?.pattern">
+                        {{'::RulesValidationMessage:OnlyNumberAndLetter' | abpLocalization }}
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="order">{{'AdministrativeUnit::TariffHierarchy:Order' | abpLocalization }}</label><small class="text-danger"> *
+          </small>
+                    <input type="number" id="order" class="form-control" formControlName="orden" />
+                    <div *ngIf="form.controls['orden'].invalid && (form.controls['orden'].dirty || form.controls['orden'].touched || submitted)">
+
+                        <small class="text-danger" *ngIf="form.controls['orden'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                        </small>
+
+                        <small class="text-danger" *ngIf="form.controls['orden'].errors?.max">
+                            {{'::RulesValidationMessage:Maximum' | abpLocalization : form.controls['orden'].errors?.max.max }}
+                            </small>
+
+                        <small class="text-danger" *ngIf="form.controls['orden'].errors?.min">
+                                {{'::RulesValidationMessage:Minimum' | abpLocalization : form.controls['orden'].errors?.min.min }}
+                                </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="hierarchy-number">{{'AdministrativeUnit::TariffHierarchy:HierarchyNumber' | abpLocalization }}</label>
+                    <input type="number" id="hierarchy-number" class="form-control" formControlName="numeroJerarquia" />
+                    <div *ngIf="form.controls['numeroJerarquia'].invalid && (form.controls['numeroJerarquia'].dirty || form.controls['numeroJerarquia'].touched || submitted)">
+
+                        <small class="text-danger" *ngIf="form.controls['numeroJerarquia'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                        </small>
+
+                        <small class="text-danger" *ngIf="form.controls['numeroJerarquia'].errors?.max">
+                            {{'::RulesValidationMessage:Maximum' | abpLocalization : form.controls['numeroJerarquia'].errors?.max.max }}
+                            </small>
+
+                        <small class="text-danger" *ngIf="form.controls['numeroJerarquia'].errors?.min">
+                                {{'::RulesValidationMessage:Minimum' | abpLocalization : form.controls['numeroJerarquia'].errors?.min.min }}
+                                </small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+    </ng-template>
+
+    <ng-template #abpFooter>
+
+        <button type="button" class="btn btn-secondary" abpClose>
+      {{ '::Cancel' | abpLocalization }}
+    </button>
+
+        <abp-button iconClass="fa fa-check" (click)="save()">
+            {{'::Save' | abpLocalization}}
+        </abp-button>
+
+    </ng-template>
+</abp-modal>

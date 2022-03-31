@@ -1,0 +1,9 @@
+button{
+    font-size: smaller;
+}
+input:focus{
+    outline: none !important;
+}
+button:disabled{
+    cursor: not-allowed;
+}

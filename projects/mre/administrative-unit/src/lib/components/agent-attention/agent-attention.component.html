@@ -1,0 +1,136 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col col-md-6">
+                <h5 class="card-title">
+                    {{ 'AdministrativeUnit::AgentAttention' | abpLocalization }} [{{administrativeUnitName}}]
+                </h5>
+            </div>
+            <div class="text-right col col-md-6">
+
+                <div class="text-lg-right pt-2">
+                    <button *abpPermission="'AdministrativeUnit.AgentAttention.Create'" id="create" class="btn btn-primary" type="button" (click)="create()">
+            <i class="fa fa-plus mr-1"></i>
+            <span>{{ 'AdministrativeUnit::AgentAttention:NewAgentAttention' | abpLocalization }}</span>
+          </button>
+
+                    <button type="button" class="btn btn-secondary ml-2" routerLink="/admin-unit/"><i class="fa fa-arrow-left"
+              aria-hidden="true"></i>
+            {{ '::Back' | abpLocalization }}</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <ngx-datatable [rows]="agentAttention.items" [count]="agentAttention.totalCount" [list]="list" default>
+            <ngx-datatable-column [name]="'::Actions' | abpLocalization" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div ngbDropdown container="body" class="d-inline-block">
+                        <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" ngbDropdownToggle>
+              <i class="fa fa-cog mr-1"></i>{{ '::Actions' | abpLocalization }}
+            </button>
+                        <div ngbDropdownMenu>
+                            <button *abpPermission="'AdministrativeUnit.AgentAttention.Update'" ngbDropdownItem (click)="edit(row.id)">
+                {{ '::Edit' | abpLocalization }}
+              </button>
+                            <button *abpPermission="'AdministrativeUnit.AgentAttention.Delete'" ngbDropdownItem (click)="delete(row.id)">
+                {{ '::Delete' | abpLocalization }}
+              </button>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column [name]="'AdministrativeUnit::AgentAttention:Name' | abpLocalization" prop="name"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'AdministrativeUnit::AgentAttention:AttentionStar' | abpLocalization" prop="attentionStart"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'AdministrativeUnit::AgentAttention:AttentionEnd' | abpLocalization" prop="attentionEnd"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'AdministrativeUnit::AgentAttention:IsActive' | abpLocalization" prop="isActive" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <i class="fa fa-times-circle text-danger" aria-hidden="true" *ngIf="!row.isActive"></i>
+                    <i class="fa fa-check-circle text-success" aria-hidden="true" *ngIf="row.isActive"></i>
+                </ng-template>
+            </ngx-datatable-column>
+
+
+        </ngx-datatable>
+    </div>
+</div>
+
+<abp-modal [(visible)]="isModalOpen" [busy]="modalBusy">
+    <ng-template #abpHeader>
+        <h3>{{'AdministrativeUnit::AgentAttention:NewAgentAttention' | abpLocalization }}</h3>
+    </ng-template>
+
+    <ng-template #abpBody>
+        <form [formGroup]="form" (ngSubmit)="save()">
+            <div class="form-group">
+                <label for="name-id">{{'AdministrativeUnit::AgentAttention:Name' | abpLocalization }}</label><small class="text-danger"> *
+            </small>
+                <input type="text" id="name" class="form-control" formControlName="nombre" autofocus />
+                <div *ngIf="form.controls['nombre'].invalid && (form.controls['nombre'].dirty || form.controls['nombre'].touched || submitted)">
+
+                    <small class="text-danger" *ngIf="form.controls['nombre'].errors?.required">
+                {{'::RulesValidationMessage:Required' | abpLocalization }}
+              </small>
+
+                    <small class="text-danger" *ngIf="form.controls['nombre'].errors?.minLength">
+                {{'::RulesValidationMessage:Minimum' |
+                abpLocalization:form.controls['nombre'].errors?.minLength.requiredLength
+                }}
+              </small>
+
+                    <small class="text-danger" *ngIf="form.controls['nombre'].errors?.maxlength">
+                {{'::RulesValidationMessage:Maximum' |
+                abpLocalization:form.controls['nombre'].errors?.maxlength.requiredLength
+                }}
+              </small>
+                </div>
+            </div>
+
+            <div class="form-check">
+                <label class="form-check-label">
+          <input formControlName="atencionPresencial" type="checkbox" [ngModel]="isPresentialAttention">
+          {{'AdministrativeUnit::AgentAttention:Presential' | abpLocalization }}
+        </label>
+            </div>
+
+            <div class="form-check">
+                <label class="form-check-label">
+          <input formControlName="atencionVirtual" type="checkbox" [ngModel]="isVirtualAttention">
+          {{'AdministrativeUnit::AgentAttention:Virtual' | abpLocalization }}
+        </label>
+            </div>
+
+            <div class="form-group">
+                <label>{{'AdministrativeUnit::AgentAttention:AttentionStar' | abpLocalization }}</label>
+                <input class="form-control" name="attentionStart" formControlName="inicioAtencion" />
+            </div>
+
+            <div class="form-group">
+                <label>{{'AdministrativeUnit::AgentAttention:AttentionEnd' | abpLocalization }}</label>
+                <input class="form-control" name="attentionEnd" formControlName="finAtencion" />
+            </div>
+
+            <div class="form-check">
+                <label class="form-check-label">
+          <input formControlName="activo" type="checkbox" [ngModel]="isActive"> {{'AdministrativeUnit::AgentAttention:IsActive' |
+          abpLocalization }}
+        </label>
+            </div>
+        </form>
+    </ng-template>
+
+
+    <ng-template #abpFooter>
+        <button type="button" class="btn btn-secondary" abpClose>
+      {{ '::Cancel' | abpLocalization }}
+    </button>
+
+        <abp-button iconClass="fa fa-check" (click)="save()">
+            {{'::Save' | abpLocalization}}
+        </abp-button>
+    </ng-template>
+
+</abp-modal>

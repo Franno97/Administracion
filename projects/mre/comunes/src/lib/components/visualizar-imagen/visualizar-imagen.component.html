@@ -1,0 +1,29 @@
+<lib-form-template [hasButtonClose]="true" [closeControl]="false" [formTitle]="'Visor de imagen'">
+    <div class="col" form-content>
+
+        <div class="card">
+            <div class="card-body">
+
+
+                <div [ngSwitch]="tipoArchivo">
+                    <div class="row justify-content-center" *ngSwitchCase="'imagen'">
+                        <div class="card col-6">
+                            <img id="imgLoad" class="img-fluid" [src]="archivo" alt="">
+                        </div>
+                    </div>
+                    <div class=" row " *ngSwitchCase="'pdf'">
+                        <div class="col pdfBox">
+                            <ngx-extended-pdf-viewer [base64Src]="archivo" [useBrowserLocale]="true" [textLayer]="true" [height]="'100'" 
+                                [showHandToolButton]="true">
+                            </ngx-extended-pdf-viewer>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</lib-form-template>

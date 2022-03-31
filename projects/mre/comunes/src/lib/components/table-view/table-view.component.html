@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-md-11" *ngIf="filtrosArrValue">
+    <div class=" input-group">
+      <label class="form-label">Buscar:</label>
+      <div class="input-group">
+        <input class="form-control" aria-label="buscar" type="text" (keyup)="applyFilter($event)">
+      </div>
+    </div>
+  </div>
+  <div class="col-md-1" *ngIf="filtrosArrValue">
+    <div class="update">
+      <i class="fas fa-sync-alt" (click)="update()"></i>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" *ngFor="let item of tabHeader">
+              {{item.name}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of dataSource;index as rowindex">
+            <td *ngFor="let itemx of tabHeader;index as i">
+              <div [ngSwitch]="itemx.valShow">
+                <div *ngSwitchCase="'icon'">
+                  <i [class]="itemIcon" [ngClass]="itemx.class?itemx.class:disabledArr[rowindex][itemx.name]"
+                    *ngFor="let itemIcon of itemx.icon" (click)="pickedField(itemx,item,itemx.disabled,rowindex)"></i>
+                </div>
+                <div *ngSwitchCase="'checkBox'">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                      (click)="pickedField(itemx,item,itemx.disabled,rowindex)">
+                  </div>
+                </div>
+                <div *ngSwitchCase="'textarea'">
+                  <div class="form-check">
+                    <textarea rows="1" placeholder="Observaciones" [(ngModel)]="observDataModel[rowindex]"
+                      [disabled]="item.disabled"
+                      (change)="pickedField(itemx,item,itemx.disabled,rowindex,observDataModel[rowindex])"></textarea>
+                  </div>
+                </div>
+                <div *ngSwitchDefault>
+                  {{ transform(item,tabHeader[i].propiedad)}}
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex justify-content-between p-2" *ngIf="pagination">
+      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+        (pageChange)="refreshData()">
+      </ngb-pagination>
+
+      <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshData()">
+        <option [ngValue]="item" *ngFor="let item of cantRowArr">{{item}} filas por página</option>
+      </select>
+    </div>
+  </div>
+</div>

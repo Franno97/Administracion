@@ -1,0 +1,143 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col col-md-6">
+                <h5 class="card-title">
+                    {{ 'AdministrativeUnit::AdministrativeUnitFunctionary' | abpLocalization }} [{{administrativeUnitName}}]
+                </h5>
+            </div>
+
+            <div class="text-right col col-md-6">
+
+                <div class="text-lg-right pt-2">
+                    <button *abpPermission="'AdministrativeUnit.AdministrativeUnit.Update'" id="create" class="btn btn-primary" type="button" (click)="addFunctionary()">
+            <i class="fa fa-plus mr-1"></i>
+            <span>{{ 'AdministrativeUnit::AdministrativeUnitFunctionary:Functionary' | abpLocalization }}</span>
+          </button>
+
+                    <button type="button" class="btn btn-secondary ml-2" routerLink="/admin-unit/"><i class="fa fa-arrow-left"
+              aria-hidden="true"></i>
+            {{ '::Back' | abpLocalization }}</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+
+        <ngx-datatable [rows]="functionary.items" [count]="functionary.totalCount" default>
+            <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="200" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div container="body" class="d-inline-block">
+                        <button class="btn btn-secondary btn-sm" (click)="removeFunctionary(row.usuarioId)">
+              {{ 'AdministrativeUnit::AdministrativeUnitFunctionary:Remove' | abpLocalization }}
+            </button>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'AdministrativeUnit::AdministrativeUnitFunctionary:Name' | abpLocalization" prop="nombre"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'AdministrativeUnit::AdministrativeUnitFunctionary:Surname' | abpLocalization" prop="apellido"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'AdministrativeUnit::AdministrativeUnitFunctionary:Position' | abpLocalization" prop="cargo"></ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+</div>
+
+<abp-modal [(visible)]="isModalOpen" [busy]="modalBusy">
+    <ng-template #abpHeader>
+        <h3>{{'AdministrativeUnit::AdministrativeUnitFunctionary:AddFunctionary' | abpLocalization }}</h3>
+    </ng-template>
+
+    <ng-template #abpBody>
+        <form [formGroup]="form" (ngSubmit)="save()">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name-id">{{'AdministrativeUnit::AdministrativeUnitFunctionary:Username' | abpLocalization }}</label><small class="text-danger"> * </small>
+                        <input type="text" id="usuario" class="form-control" formControlName="usuario" autofocus />
+                        <div *ngIf="form.controls['usuario'].invalid && (form.controls['usuario'].dirty || form.controls['usuario'].touched || submitted)">
+
+                            <small class="text-danger" *ngIf="form.controls['usuario'].errors?.required">
+                {{'::RulesValidationMessage:Required' | abpLocalization }}
+              </small>
+
+                            <small class="text-danger" *ngIf="form.controls['usuario'].errors?.minLength">
+                {{'::RulesValidationMessage:Minimum' | abpLocalization:form.controls['usuario'].errors?.minLength.requiredLength
+                }}
+              </small>
+
+                            <small class="text-danger" *ngIf="form.controls['usuario'].errors?.maxlength">
+                {{'::RulesValidationMessage:Maximum' | abpLocalization:form.controls['usuario'].errors?.maxlength.requiredLength
+                }}
+              </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 button-search">
+                    <button class="btn btn-secondary btn-sm" (click)="searchFunctionary()">
+            <i class="fa fa-search mr-1"></i> {{ 'AdministrativeUnit::AdministrativeUnitFunctionary:Search' | abpLocalization }}
+          </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nombre">{{'AdministrativeUnit::AdministrativeUnitFunctionary:Functionary' | abpLocalization }}</label><small class="text-danger"> * </small>
+                <input type="text" id="nombre" class="form-control" formControlName="nombre" disabled/>
+            </div>
+
+            <div class="form-group">
+                <label for="service-type">{{'AdministrativeUnit::AdministrativeUnitFunctionary:Position' | abpLocalization }}</label><small class="text-danger"> *
+        </small>
+                <select class="form-control" id="cargoId" formControlName="cargoId">
+          <option [ngValue]="null" disabled>{{'::SelectValue'| abpLocalization }}</option>
+          <option [ngValue]="p.id" *ngFor="let p of position"> {{ p.nombre }}</option>
+        </select>
+                <div *ngIf="form.controls['cargoId'].invalid && (form.controls['cargoId'].dirty || form.controls['cargoId'].touched || submitted)">
+                    <small class="text-danger" *ngIf="form.controls['cargoId'].errors?.required">
+            {{'::RulesValidationMessage:Required' | abpLocalization }}
+          </small>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+
+    <ng-template #abpFooter>
+        <button type="button" class="btn btn-secondary" abpClose>
+      {{ '::Cancel' | abpLocalization }}
+    </button>
+
+        <abp-button iconClass="fa fa-check" (click)="save()">
+            {{'::Save' | abpLocalization}}
+        </abp-button>
+    </ng-template>
+
+</abp-modal>
+
+<abp-modal [(visible)]="isModalOpenSearch">
+    <ng-template #abpHeader>
+        <h3>{{'AdministrativeUnit::AdministrativeUnitFunctionary:Functionary' | abpLocalization }}</h3>
+    </ng-template>
+
+    <ng-template #abpBody>
+        <ngx-datatable [rows]="filteredfunctionaries.items" [count]="filteredfunctionaries.totalCount" [list]="list" default>
+            <ngx-datatable-column [name]="'AdministrativeUnit::AdministrativeUnitFunctionary:Name' | abpLocalization" prop="name">
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'AdministrativeUnit::AdministrativeUnitFunctionary:Surname' | abpLocalization" prop="surname">
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'AdministrativeUnit::AdministrativeUnitFunctionary:Username' | abpLocalization" prop="userName">
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="200" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div container="body" class="d-inline-block">
+                        <button class="btn btn-primary btn-sm" (click)="selectFunctionary(row.id, row.name, row.surname, row.userName)">
+              {{ '::SelectValue' | abpLocalization }}
+            </button>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+
+        </ngx-datatable>
+    </ng-template>
+
+</abp-modal>

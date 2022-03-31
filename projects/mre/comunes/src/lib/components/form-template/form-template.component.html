@@ -1,0 +1,32 @@
+<div class="container minWidth">
+    <div class="card">
+        <div class="bkGround" [style.background-image]="'url(/assets/images/bGround/bg_bg-ecuador_digital.png)'">
+            <div class="container">
+                <div class="row">
+                    <div class="col-8" *ngIf="formTitle">
+                        <h3>{{formTitle}}</h3>
+                    </div>
+                    <div class="col-4">
+                            <div class="d-flex flex-row-reverse">
+                              <i class="fas fa-window-close botonClose" *ngIf="hasButtonClose" (click)="onCloseModal()"></i>
+                            </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-12 marginPad" >
+                        <ng-content select="[form-header]"></ng-content>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-content select="[form-content]"></ng-content>
+        <div class="container">
+            <div class="row">
+                <div class="col-6 st1"></div>
+                <div class="col st2"></div>
+                <div class="col st3"></div>
+            </div>
+        </div>
+    </div>
+</div>

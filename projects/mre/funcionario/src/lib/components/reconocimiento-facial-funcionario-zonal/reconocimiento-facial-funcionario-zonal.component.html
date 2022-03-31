@@ -1,0 +1,63 @@
+<lib-form-template [formTitle]="formTitle" (clickedButtonClose)="onCloseModal()" hasButtonClose="true">
+    <div class="col" form-content>
+        <br>
+        <lib-datos-solicitante-shared [datosSolicitanteCompartido]="datosSolicitanteCompartido" *ngIf="visaTitular">
+        </lib-datos-solicitante-shared>
+        <lib-datos-beneficiario-shared [datosBeneficiarioCompartido]="datosBeneficiarioCompartido"
+            [visaTitular]="visaTitular">
+        </lib-datos-beneficiario-shared>
+        <lib-form-datos-comun [formData]="formData" titleTab="Reconocimiento facial">
+            <div class="col-12" FormPrincipal>
+
+            </div>
+            <div class="row" formDatosComunTab>
+                <div class="col-12">
+                    <lib-reconocimiento-facial-facetec [datos]="datosReconocimientoFacial"
+                        (resultadoProcesoComparar)="resultadoProcesoComparar($event)">
+                    </lib-reconocimiento-facial-facetec>
+                </div>
+
+                <div class="col-12 ">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="form-check form-check-inline" *ngFor="let item of radioButtons;index as i">
+                                <label class="btn btn-outline-info btn-sm" [for]="item.idFor">
+                                    {{item.label}}
+                                    <input class="btn-check" type="radio" name="funcionarioRadioButton"
+                                        [id]="item.idFor" [checked]="i === 0" (click)="clicRadioButton(i)">
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-md-2 col-sm-12">
+                            <lib-observaciones [observacionesName]="observacionesName"
+                                [observacionesModel]="observacionesModel"
+                                [observacionesAnteriores]="observacionesAnteriores"
+                                (observChange)="observChange($event)">
+                            </lib-observaciones>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row justify-content-end">
+                            <div class="form-group">
+                                <button class="btn btn-primary botonAlign" (click)="onSubmit()"
+                                    [disabled]="!linksVisitedAll">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+
+        </lib-form-datos-comun>
+        <hr>
+    </div>
+</lib-form-template>

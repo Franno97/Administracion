@@ -1,0 +1,14 @@
+<container-element [ngSwitch]="switch_expression">
+    <some-element *ngSwitchCase="'Perito'">
+        <lib-perito [tabHeader] = 'tabHeader' [tabDataSource] = 'tabDataSource'></lib-perito>
+    </some-element>
+    <some-element *ngSwitchCase="'Consultor'">
+       <lib-consultor [tabHeader] = 'tabHeader' [tabDataSource] = 'tabDataSource'></lib-consultor>
+    </some-element>
+    <some-element *ngSwitchCase="'Funcionario'">
+        <lib-funcionario [tabHeader] = "tabHeader" [tabDataSource] = "tabDataSource"></lib-funcionario>
+    </some-element>
+</container-element>
+<lib-mensaje-board [mensajesArr]="mensajesArr"></lib-mensaje-board>
+
+  

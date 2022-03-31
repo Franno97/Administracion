@@ -1,0 +1,41 @@
+<lib-form-datos-comun [titleTab]="titleTab">
+    <div class="row" formDatosComunTab>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-3">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card">
+                                <span>Exoneraciones</span>
+                                <p>Discapacidad: 00.00 %</p>
+                                <p>Tercera edad: 00.00 %</p>
+                            </div>
+                            <div class="card" *ngIf="!pagoFacturacion">
+                                <span>Forma de pago seleccionada</span>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                        id="flexRadioFormadePago" checked>
+                                    <label class="form-check-label" for="flexRadioFormadePago">
+                                        Depósito
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <lib-table-view [tabHeader]='tabHeader' [tabDataSource]='tabDataSource'></lib-table-view>
+                    <div class="card-body">
+                        <div class="row justify-content-end">
+                            <div class="form-group">
+                                <button class="btn btn-primary botonAlign">{{nameButton}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</lib-form-datos-comun>

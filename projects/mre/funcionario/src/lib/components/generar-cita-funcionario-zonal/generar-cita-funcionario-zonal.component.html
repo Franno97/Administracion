@@ -1,0 +1,26 @@
+<lib-form-template [formTitle]="formTitle" (clickedButtonClose)="onCloseModal()" hasButtonClose="true">
+    <div class="col" form-content>
+        <br>
+        <lib-datos-solicitante-shared [datosSolicitanteCompartido]="datosSolicitanteCompartido" *ngIf="visaTitular">
+        </lib-datos-solicitante-shared>
+        <lib-datos-beneficiario-shared [datosBeneficiarioCompartido]="datosBeneficiarioCompartido"
+            [visaTitular]="visaTitular">
+        </lib-datos-beneficiario-shared>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <lib-agendar-cita [datosEntrada]="datosAgendarCitaEntrada"
+                    (cambioDatosFormulario)="cambioDatosFormularioCita($event)"></lib-agendar-cita>
+            </div>
+        </div>
+        <hr>
+        <div class="card-body">
+            <div class="row justify-content-end">
+                <div class="form-group">
+                    <button class="btn btn-primary botonAlign" (click)="onSubmit()"
+                        [disabled]="!linksVisitedAll">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</lib-form-template>

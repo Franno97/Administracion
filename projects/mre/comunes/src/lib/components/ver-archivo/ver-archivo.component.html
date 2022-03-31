@@ -1,0 +1,25 @@
+<!-- <ng2-pdfjs-viewer #pdfViewer id = "pdfLoadAG"></ng2-pdfjs-viewer>
+<p>ldasjgldj</p> -->
+
+<div [ngSwitch]="tipoArchivo">
+    <div class="row justify-content-center" *ngSwitchCase="'imagen'">
+        <div class=" card col-6">
+             <img id = "imgLoad" class="img-fluid" [src]="pathArchivo" alt="">
+        </div>
+    </div>
+    <div class=" row " *ngSwitchCase="'pdf'">
+        <div class="col pdfBox">
+            <ngx-extended-pdf-viewer
+            [src]="src"
+            [height]="'95%'"
+            [useBrowserLocale]="true"
+            [textLayer]="true" 
+            [showHandToolButton]="true"> 
+            </ngx-extended-pdf-viewer>
+        </div>
+    </div>
+</div>
+
+
+
+

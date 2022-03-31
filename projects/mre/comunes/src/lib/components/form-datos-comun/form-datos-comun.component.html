@@ -1,0 +1,12 @@
+    <div class="row">
+        <ng-content select = "[FormPrincipal]"></ng-content>
+    </div>
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1">
+          <a ngbNavLink>{{titleTab}}</a>
+          <ng-template ngbNavContent>
+            <ng-content select="[formDatosComunTab]"></ng-content>
+          </ng-template>
+        </li>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>

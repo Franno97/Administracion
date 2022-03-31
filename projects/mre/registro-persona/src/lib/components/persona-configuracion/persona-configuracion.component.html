@@ -1,0 +1,143 @@
+<h2>
+    {{ 'PersonRegistration::RegistroPersonaConfiguracion' | abpLocalization }}
+</h2>
+
+
+<form [formGroup]="formulario" (ngSubmit)="guardar()" validateOnSubmit>
+
+    <div class="custom-checkbox custom-control mb-2">
+        <input type="checkbox" id="validarPuntoDeAcceso-id" class="custom-control-input" formControlName="validarPuntoDeAcceso" />
+        <label class="custom-control-label" for="validarPuntoDeAcceso-id">{{'PersonRegistration::RegistroPersonaConfiguracion:ValidarPuntoDeAcceso'
+                    | abpLocalization}}</label>
+    </div>
+
+    <div class="custom-checkbox custom-control mb-2">
+        <input type="checkbox" id="validarNacionalidad-id" class="custom-control-input" formControlName="validarNacionalidad" />
+        <label class="custom-control-label" for="validarNacionalidad-id">{{'PersonRegistration::RegistroPersonaConfiguracion:ValidarNacionalidad'
+                    | abpLocalization}}</label>
+    </div>
+
+    <div class="form-group">
+        <label>{{ 'PersonRegistration::RegistroPersonaConfiguracion:NacionalidadesPermitidas' | abpLocalization
+                    }}</label>
+        <input class="form-control" formControlName="nacionalidadesPermitidas" maxlength="200" />
+    </div>
+
+    <div class="custom-checkbox custom-control mb-2">
+        <input type="checkbox" id="validarMayoriaEdad" class="custom-control-input" formControlName="validarMayoriaEdad" />
+        <label class="custom-control-label" for="validarMayoriaEdad">{{
+                    'PersonRegistration::RegistroPersonaConfiguracion:ValidarEdadMinima' | abpLocalization
+                    }}</label>
+    </div>
+
+    <div class="form-group">
+        <label>{{ 'PersonRegistration::RegistroPersonaConfiguracion:MayoriaEdadPermitidad' | abpLocalization
+                    }}</label>
+        <input type="number" class="form-control" formControlName="edadMinima" maxlength="2" />
+    </div>
+
+    <div class="custom-checkbox custom-control mb-2">
+        <input type="checkbox" id="habilitarCaptcha" class="custom-control-input" formControlName="habilitarCaptcha" />
+        <label class="custom-control-label" for="habilitarCaptcha">{{
+                    'PersonRegistration::RegistroPersonaConfiguracion:HabilitarCaptcha' | abpLocalization
+                    }}</label>
+    </div>
+
+    <div class="form-group">
+        <label for="birthDate-id">{{'PersonRegistration::RegistroPersonaConfiguracion:FechaInicialControl'
+                    | abpLocalization
+                    }}:<small class="text-danger"> * </small></label>
+
+        <input #datepickerstart="ngbDatepicker" [maxDate]="maxDate" class="form-control form-control-lg" formControlName="fechaInicialControl" ngbDatepicker (click)="datepickerstart.toggle()" placeholder="dd/mm/aaaa" />
+        <div *ngIf="formulario.controls['fechaInicialControl'].invalid && (formulario.controls['fechaInicialControl'].dirty || formulario.controls['fechaInicialControl'].touched )">
+
+            <small class="text-danger" *ngIf="formulario.controls['fechaInicialControl'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+
+            <small class="text-danger" *ngIf="formulario.controls['fechaInicialControl'].errors.ngbDate?.invalid">
+                        {{
+                            '::RulesValidationMessage:FechaInvalida' | abpLocalization:formulario.controls['fechaInicialControl'].errors?.ngbDate?.invalid
+                        }}
+                    </small>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="birthDate-id">{{'PersonRegistration::RegistroPersonaConfiguracion:FechaFinalControl'
+                    | abpLocalization
+                    }}:<small class="text-danger"> * </small></label>
+
+        <input #datepickerend="ngbDatepicker" [maxDate]="maxDate" class="form-control form-control-lg" formControlName="fechaFinalControl" ngbDatepicker (click)="datepickerend.toggle()" placeholder="dd/mm/aaaa" />
+        <div *ngIf="formulario.controls['fechaFinalControl'].invalid && (formulario.controls['fechaFinalControl'].dirty || formulario.controls['fechaFinalControl'].touched )">
+
+            <small class="text-danger" *ngIf="formulario.controls['fechaFinalControl'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+
+            <small class="text-danger" *ngIf="formulario.controls['fechaFinalControl'].errors?.ngbDate?.invalid">
+                        {{
+                            '::RulesValidationMessage:FechaInvalida' | abpLocalization:formulario.controls['fechaFinalControl'].errors?.ngbDate?.invalid
+                        }}
+                    </small>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>{{ 'PersonRegistration::RegistroPersonaConfiguracion:DuracionCodigoVerificacion' |
+                    abpLocalization
+                    }}</label>
+        <input type="number" class="form-control" formControlName="duracionCodigoVerificacion" maxlength="2" />
+        <div *ngIf="formulario.controls['duracionCodigoVerificacion'].invalid && (formulario.controls['duracionCodigoVerificacion'].dirty || formulario.controls['duracionCodigoVerificacion'].touched )">
+
+            <small class="text-danger" *ngIf="formulario.controls['duracionCodigoVerificacion'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>{{ 'PersonRegistration::RegistroPersonaConfiguracion:IntentosPermitidos' | abpLocalization
+                    }}</label>
+        <input type="number" class="form-control" formControlName="intentosPermitidos" maxlength="2" />
+        <div *ngIf="formulario.controls['intentosPermitidos'].invalid && (formulario.controls['intentosPermitidos'].dirty || formulario.controls['intentosPermitidos'].touched )">
+
+            <small class="text-danger" *ngIf="formulario.controls['intentosPermitidos'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>{{ 'PersonRegistration::RegistroPersonaConfiguracion:DuracionBloqueo' | abpLocalization
+                    }}</label>
+        <input type="number" class="form-control" formControlName="duracionBloqueo" maxlength="2" />
+        <div *ngIf="formulario.controls['duracionBloqueo'].invalid && (formulario.controls['duracionBloqueo'].dirty || formulario.controls['duracionBloqueo'].touched )">
+
+            <small class="text-danger" *ngIf="formulario.controls['duracionBloqueo'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>{{ 'PersonRegistration::RegistroPersonaConfiguracion:VigenciaInformacion' | abpLocalization
+                    }}</label>
+        <input type="number" class="form-control" formControlName="vigenciaInformacion" maxlength="2" />
+        <div *ngIf="formulario.controls['vigenciaInformacion'].invalid && (formulario.controls['vigenciaInformacion'].dirty || formulario.controls['vigenciaInformacion'].touched )">
+
+            <small class="text-danger" *ngIf="formulario.controls['vigenciaInformacion'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+        </div>
+    </div>
+
+    <hr />
+
+    <button type="submit" class="btn btn-primary" [disabled]="guardando">
+                <i class="fa fa-spinner fa-spin" *ngIf="guardando"></i>
+                {{ '::Save' | abpLocalization }}
+            </button>
+
+</form>

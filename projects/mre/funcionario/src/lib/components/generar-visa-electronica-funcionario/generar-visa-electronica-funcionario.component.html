@@ -1,0 +1,73 @@
+<lib-form-template [formTitle]="formTitle" (clickedButtonClose)="onCloseModal()" hasButtonClose="true">
+    <div class="col" form-content>
+        <br>
+        <lib-datos-solicitante [datosSolicitante]="datosSolicitante" *ngIf="visaTitular"></lib-datos-solicitante>
+        <lib-datos-beneficiario-shared [datosBeneficiarioCompartido]="datosBeneficiarioCompartido"
+            [visaTitular]="visaTitular">
+        </lib-datos-beneficiario-shared>
+        <hr>
+        <div class="row justify-content-center">
+            <div class="col-6">
+
+                <div class="form-group row">
+                    <label for="signatario" class="col-form-label coln text-right">Signatario:</label>
+                    <div class="col text-left">
+                        <select class="form-control" id="signatario" formControlName="signatario">
+                            <option [ngValue]="null" disabled>{{'::SelectValue' | abpLocalization }}</option>
+                            <option [ngValue]="s.usuarioId" *ngFor="let s of signatarios.items"> {{ s.nombres + ' ' +
+                                s.apellidos }}</option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label class="font-weight-bolder">
+                    Días vigencia:&nbsp;
+                </label>
+                <label>
+                    {{visaElectronica!=null?visaElectronica.diasVigencia:''}}
+                </label>
+            </div>
+
+        </div>
+
+
+
+        <hr />
+        <div *ngIf="mostraPdfVisas" class="row">
+            <div class="col pdfBox previsualizarDocument">
+                <ngx-extended-pdf-viewer [base64Src]="archivoBase64" [height]="'95%'" [useBrowserLocale]="true"
+                    [textLayer]="true" [showHandToolButton]="true">
+                </ngx-extended-pdf-viewer>
+                <br>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+
+            <div class="col-12">
+                <lib-observaciones [observacionesName]="observacionesName" [observacionesModel]="observacionesModel"
+                    [observacionesAnteriores]="observacionesAnteriores" (observChange)="observChange($event)">
+                </lib-observaciones>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <div class="card-body">
+                    <div class="row justify-content-end">
+                        <div class="form-group">
+                            <button class="btn btn-primary botonAlign" (click)="onSubmit()"
+                                [disabled]="!linksVisitedAll"> Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</lib-form-template>

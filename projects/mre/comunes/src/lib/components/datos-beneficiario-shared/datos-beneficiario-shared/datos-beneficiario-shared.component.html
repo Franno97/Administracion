@@ -1,0 +1,109 @@
+<div class="card-body">
+    <hr *ngIf="visaTitular">
+    <h3 class="card-title">Datos Beneficiario</h3>
+    <!-- <form [formGroup]="formData">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2 col-sm-12">
+                    <img class="img-fluid" [src]="srcImagen" alt="">
+                </div>
+                <div class="col-md-5 col-sm-12">
+                    <lib-input-field *ngFor="let item of arrField1" [formControlData]="formData"
+                        placeHolder={{item.placeHolder}} typeInput={{item.typeInput}} icon={{item.icon}}
+                        [contentInfo]="item.contentInfo" [formCtrlName]='item.formCtrolName'
+                        [disabledx]='item.disabledx'></lib-input-field>
+                    <div class="row" *ngIf="hasConadis">
+                        <div class="col-1">
+                            <input class="form-check-input" type="checkbox" value=""
+                                formControlName='discapacidadBeneficiario'>
+                        </div>
+                        <div class="col">
+                            <lib-input-field [formControlData]="formData" placeHolder="Nro. CONADIS" typeInput="number"
+                                formCtrlName='numeroCarnetConadisBeneficiario' icon="fas fa-user-circle">
+                            </lib-input-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 col-sm-12">
+                    <lib-input-field [formControlData]="formData" placeHolder="Segundo Apellido" typeInput="text"
+                        formCtrlName='segundoApellidoBeneficiario' icon="fas fa-user-circle"></lib-input-field>
+                    <div class="row">
+                        <div class="col">
+                            <lib-input-field [formControlData]="formData" placeHolder="Fecha de nacimiento"
+                                typeInput="date" formCtrlName='fechaNacimientoBeneficiario' icon="fas fa-user-circle">
+                            </lib-input-field>
+                        </div>
+                        <div class="col">
+                            <lib-input-field [formControlData]="formData" placeHolder="Edad" typeInput="number"
+                                formCtrlName='edadBeneficiario' icon="fas fa-user-circle"></lib-input-field>
+                        </div>
+                    </div>
+                    <lib-input-field *ngFor="let item of arrField2" [formControlData]="formData"
+                        placeHolder={{item.placeHolder}} typeInput={{item.typeInput}} icon={{item.icon}}
+                        [contentInfo]="item.contentInfo" [formCtrlName]='item.formCtrolName'
+                        [disabledx]='item.disabledx'></lib-input-field>
+                    <lib-input-field *ngIf="hasConadis" [formControlData]="formData" placeHolder="% discapacidad"
+                        typeInput="number" formCtrlName='porcientoDiscapacidadBeneficiario' icon="fas fa-user-circle">
+                    </lib-input-field>
+                </div>
+            </div>
+        </div>
+    </form> -->
+
+    <div class="row">
+        <div class="col-2"><img class="img-fluid" [src]="srcImagen" alt=""></div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-2"><label class="font-weight-bolder">Primer Apellido:</label>
+                </div>
+                <div class="col-4"><label>{{datosBeneficiarioCompartido.primerApellido}}</label></div>
+                <div class="col-2"><label class="font-weight-bolder">Segundo Apellido:</label>
+                </div>
+                <div class="col-4"><label>{{datosBeneficiarioCompartido.segundoApellido}}</label></div>
+            </div>
+            <div class="row">
+                <div class="col-2"><label class="font-weight-bolder">Nombres:</label>
+                </div>
+                <div class="col-4"><label>{{datosBeneficiarioCompartido.nombres}}</label></div>
+                <div class="col-2"><label class="font-weight-bolder">Fecha de nacimiento:</label>
+                </div>
+                <div class="col-4"><label>{{datosBeneficiarioCompartido.fechaNacimiento}}</label></div>
+                <div class="col-2"><label class="font-weight-bolder">Edad:</label>
+                </div>
+                <div class="col-4"><label>{{datosBeneficiarioCompartido.edad}}</label></div>
+            </div>
+            <div class="row">
+                <div class="col-2"><label class="font-weight-bolder">País de nacimiento:</label>
+                </div>
+                <div class="col-4"><label>{{datosBeneficiarioCompartido.paisNacimiento}}</label></div>
+                <div class="col-2"><label class="font-weight-bolder">Nacionalidad:</label>
+                </div>
+                <div class="col-4"><label>{{datosBeneficiarioCompartido.nacionalidad}}</label></div>
+            </div>
+            <div class="row">
+                <div class="col-2"><label class="font-weight-bolder">Correo electrónico:</label>
+                </div>
+                <div class="col-4"><label>{{datosBeneficiarioCompartido.correoElectronico}}</label></div>
+                <div class="col-2"><label class="font-weight-bolder">Nro. de documento:</label>
+                </div>
+                <div class="col-4"><label>{{datosBeneficiarioCompartido.numeroDocumento}}</label></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">Discapacidad:</label>
+        </div>
+        <div class="col-2"><label>{{datosBeneficiarioCompartido.tieneDiscapacidad}}</label></div>
+        <div class="col-2"><label class="font-weight-bolder">Nro. CONADIS:</label>
+        </div>
+        <div class="col-2"><label>{{datosBeneficiarioCompartido.numeroCarnetConadis}}</label></div>
+        <div class="col-2"><label class="font-weight-bolder">% discapacidad:</label>
+        </div>
+        <div class="col-2"><label>{{datosBeneficiarioCompartido.porcientoDiscapacidad}}</label></div>
+    </div>
+
+
+
+</div>

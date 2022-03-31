@@ -1,0 +1,135 @@
+<div class="card">
+
+    <div class="card-header  ">
+        <h4 class="card-title"> {{'::Menu:MiFirmaElectronica' | abpLocalization}}</h4>
+    </div>
+
+    <div class="card-body"> 
+        <div class="row justify-content-center"> 
+            
+            <div class="col-6">
+                <ng-container *ngIf="!permitirConfigurar && !consultando"> 
+    
+                    <div class="alert alert-warning" role="alert">
+                        {{ 'AdministrativeUnit::ConfigurarFirmaElectronica:NoPermitida' | abpLocalization }}
+                      </div>
+        
+                </ng-container>
+              
+                <ng-container *ngIf="permitirConfigurar && !consultando">
+                    
+        
+                    <div class="alert alert-success" role="alert" *ngIf="existeConfiguracion && !consultando">
+                        {{ 'AdministrativeUnit::ConfigurarFirmaElectronica:ExisteConfiguracion' | abpLocalization }}
+                    </div>
+
+                    <div class="alert alert-warning" role="alert" *ngIf="!existeConfiguracion && !consultando">
+                        {{ 'AdministrativeUnit::ConfigurarFirmaElectronica:NoExisteConfiguracion' | abpLocalization }}
+                    </div>
+            
+                    <div class="text-center">
+                        <ng-container *ngIf="existeConfiguracion">
+                            <button id="Eliminar" class="btn btn-danger mr-3" type="button" (click)="eliminarConfiguracion()" >
+                                <span>{{ '::Eliminar' | abpLocalization }}</span>
+                            </button>  
+    
+                            <button id="modificar" class="btn btn-primary mr-3" type="button" (click)="agregarConfiguracion()" >
+                                <span>{{ '::Modificar' | abpLocalization }}</span>
+                            </button> 
+                        </ng-container>
+                        
+              
+                        <ng-container *ngIf="!existeConfiguracion">
+                            <button id="agregar" class="btn btn-primary" type="button" (click)="agregarConfiguracion()" *ngIf="!existeConfiguracion">
+                                <i class="fa fa-plus mr-1"></i>
+                                <span>{{ '::Agregar' | abpLocalization }}</span>
+                            </button>  
+                        </ng-container>
+
+                      
+                    </div>
+        
+                </ng-container>
+            </div>
+        </div>
+       
+
+       
+  
+    </div>
+
+</div>
+
+
+<abp-modal size="md" [(visible)]="isModalOpen" [busy]="modalBusy">
+    <ng-template #abpHeader>
+        <h3>{{'::Menu:MiFirmaElectronica' | abpLocalization}}</h3>
+    </ng-template>
+
+    <ng-template #abpBody>
+        <form id="editForm" [formGroup]="form" (ngSubmit)="guardar()" autocomplete="nope">
+
+            <div class="form-group">
+                <label for="claveFirma">{{ 'AdministrativeUnit::ConfigurarFirmaElectronica:Clave' | abpLocalization }}</label>
+                <input type="password" id="claveFirma" class="form-control" formControlName="claveFirma" autofocus  autocomplete="nope" />
+                <div
+                    *ngIf="form.controls['claveFirma'].invalid && (form.controls['claveFirma'].dirty || form.controls['claveFirma'].touched || submitted)">
+
+                    <small class="text-danger" *ngIf="form.controls['claveFirma'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmarClaveFirma">{{ 'AdministrativeUnit::ConfigurarFirmaElectronica:ConfirmarClaveFirma' | abpLocalization }}</label>
+                <input type="password" id="confirmarClaveFirma" class="form-control" formControlName="confirmarClaveFirma" autocomplete="usrAddrInput"  />
+                <div
+                    *ngIf="form.controls['confirmarClaveFirma'].invalid && (form.controls['confirmarClaveFirma'].dirty || form.controls['confirmarClaveFirma'].touched || submitted)">
+
+                    <small class="text-danger" *ngIf="form.controls['confirmarClaveFirma'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+
+                    <small class="text-danger" *ngIf="form.controls['confirmarClaveFirma'].errors?.confirmacion">
+                        {{'::RulesValidationMessage:ClaveVerificacion' | abpLocalization }}
+                    </small>
+
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="archivoFirma">{{ 'AdministrativeUnit::ConfigurarFirmaElectronica:ArchivoFirma' | abpLocalization }}</label>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="archivoFirma"
+                         (change)="onFileChanged($event)" [accept]="extensionesAceptadas" >
+                  <label class="custom-file-label"  for="archivoFirma">{{  archivoSeleccionado==nulll ? ('AdministrativeUnit::ConfigurarFirmaElectronica:SeleccionarArchivo' | abpLocalization):archivoSeleccionado.name  }}</label>
+                </div>
+                <div
+                    *ngIf="form.controls['archivoFirma'].invalid && (form.controls['archivoFirma'].dirty || form.controls['archivoFirma'].touched || submitted)">
+
+                    <small class="text-danger" *ngIf="form.controls['archivoFirma'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+                </div>
+              </div>
+
+        
+
+        </form>
+    </ng-template>
+
+    <ng-template #abpFooter>
+
+        <button type="button" class="btn btn-secondary" #abpClose>
+            {{ '::Cancel' | abpLocalization }}
+        </button>
+
+        <abp-button iconClass="fa fa-check" (click)="guardar()">
+            {{'::Save' | abpLocalization}}
+        </abp-button>
+
+    </ng-template>
+</abp-modal>

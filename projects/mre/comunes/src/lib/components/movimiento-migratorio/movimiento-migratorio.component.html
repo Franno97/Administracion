@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="col-12">
+        <!--  <lib-table-view [tabHeader]='tabHeader' [tabDataSource]='tabDataSource' (rowClicked)="rowClickedEvent($event)">
+        </lib-table-view> -->
+
+        <ngx-datatable [rows]="tabDataSource"
+            [messages]="{emptyMessage: 'No existen registros a mostrar', totalMessage: 'Total'}" [rowHeight]="'auto'"
+            default>
+
+            <ngx-datatable-column [name]="'Categoría migratoria'" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.categoriaMigratoria}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'F. Movimiento'" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.fechaHoraMovimiento}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'Motivo de viaje'" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.motivoViaje}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'Nacionalidad documento migratorio'" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.nacionalidadDocumentoMovimientoMigratorio}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'Número de documento'" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.numeroDocumento}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'País destino'" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.paisDestino}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'País origen'" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.paisOrigen}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'Puerto registro'" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.puertoRegistro}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'Tarjeta andina'" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.tarjetaAndina}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'Tipo de documento'" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.tipoDocumentoMovimientoMigratorio}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'Tipo de movimiento'" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.tipoMovimiento}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'Tiempo declarado'" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.tiempoDeclarado}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'País de residencia'" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.paisResidencia}}
+                </ng-template>
+            </ngx-datatable-column>
+
+
+        </ngx-datatable>
+
+
+    </div>
+</div>

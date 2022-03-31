@@ -1,0 +1,136 @@
+
+
+<h2>{{ 'Base::IdentidadConfiguracion' | abpLocalization }}</h2>
+
+<hr class="my-3" />
+
+<form *ngIf="formulario" [formGroup]="formulario" (ngSubmit)="guardar()" validateOnSubmit>
+   
+    <div class="form-group">
+        <label>{{ 'Base::IdentidadConfiguracion:ClaveLongitud' | abpLocalization }}</label>
+        <input type="number" class="form-control" formControlName="claveLongitud" />
+      </div>
+    
+    
+      <div class="custom-checkbox custom-control mb-2">
+        <input
+          type="checkbox"
+          id="claveRequiereDigito"
+          class="custom-control-input"
+          formControlName="claveRequiereDigito"
+        />
+        <label class="custom-control-label" for="claveRequiereDigito">{{
+          'Base::IdentidadConfiguracion:ClaveRequiereDigito' | abpLocalization
+        }}</label>
+      </div>
+
+      <div class="custom-checkbox custom-control mb-2">
+        <input
+          type="checkbox"
+          id="claveRequiereMayusculas"
+          class="custom-control-input"
+          formControlName="claveRequiereMayusculas"
+        />
+        <label class="custom-control-label" for="claveRequiereMayusculas">{{
+          'Base::IdentidadConfiguracion:ClaveRequiereMayusculas' | abpLocalization
+        }}</label>
+      </div>
+
+      <div class="custom-checkbox custom-control mb-2">
+        <input
+          type="checkbox"
+          id="claveRequiereMinusculas"
+          class="custom-control-input"
+          formControlName="claveRequiereMinusculas"
+        />
+        <label class="custom-control-label" for="claveRequiereMinusculas">{{
+          'Base::IdentidadConfiguracion:ClaveRequiereMinusculas' | abpLocalization
+        }}</label>
+      </div>
+
+      <div class="custom-checkbox custom-control mb-2">
+        <input
+          type="checkbox"
+          id="claveRequiereNoAlfanumericos"
+          class="custom-control-input"
+          formControlName="claveRequiereNoAlfanumericos"
+        />
+        <label class="custom-control-label" for="claveRequiereNoAlfanumericos">{{
+          'Base::IdentidadConfiguracion:ClaveRequiereNoAlfanumericos' | abpLocalization
+        }}</label>
+      </div>
+
+      <div class="form-group">
+        <label>{{ 'Base::IdentidadConfiguracion:BloqueoTiempo' | abpLocalization }}</label>
+        <input type="number" class="form-control" formControlName="bloqueoTiempo" />
+      </div>
+
+      <div class="form-group">
+        <label>{{ 'Base::IdentidadConfiguracion:BloqueoMaximoAccesoFallidos' | abpLocalization }}</label>
+        <input type="number" class="form-control" formControlName="bloqueoMaximoAccesoFallidos" />
+      </div>
+
+
+      <div class="custom-checkbox custom-control mb-2">
+        <input
+          type="checkbox"
+          id="bloqueoNuevosUsuarios"
+          class="custom-control-input"
+          formControlName="bloqueoNuevosUsuarios"
+        />
+        <label class="custom-control-label" for="bloqueoNuevosUsuarios">{{
+          'Base::IdentidadConfiguracion:BloqueoNuevosUsuarios' | abpLocalization
+        }}</label>
+      </div>
+
+      <div class="custom-checkbox custom-control mb-2">
+        <input
+          type="checkbox"
+          id="accesoNotificarFallidos"
+          class="custom-control-input"
+          formControlName="accesoNotificarFallidos"
+        />
+        <label class="custom-control-label" for="accesoNotificarFallidos">{{
+          'Base::Acceso:NotificarFallido' | abpLocalization
+        }}</label>
+      </div>
+
+      <fieldset >
+        <div class="custom-checkbox custom-control mb-2">
+          <input
+            type="checkbox"
+            id="controlarClavesAnterior"
+            class="custom-control-input"
+            formControlName="controlarClavesAnterior"
+          />
+          <label class="custom-control-label" for="controlarClavesAnterior">{{
+            'Base::Identidad:ControlarClavesAnterior' | abpLocalization
+          }}</label>
+        </div>
+  
+        <div class="form-group">
+          <label>{{ 'Base::Identidad:ControlarClavesAnteriorCantidad' | abpLocalization }}</label>
+          <input type="number" class="form-control" formControlName="controlarClavesAnteriorCantidad"  />
+  
+         <!--  <div *ngIf="formulario.controls['controlarClavesAnteriorCantidad'].invalid && (formulario.controls['controlarClavesAnteriorCantidad'].dirty || formulario.controls['controlarClavesAnteriorCantidad'].touched || submitted)">
+    
+            <small class="text-danger" *ngIf="formulario.controls['controlarClavesAnteriorCantidad'].errors?.min">
+            {{'::RulesValidationMessage:Minimum' | abpLocalization:formulario.controls['controlarClavesAnteriorCantidad'].errors?.min.min }}
+            </small>
+  
+             <small class="text-danger" *ngIf="formulario.controls['controlarClavesAnteriorCantidad'].errors?.max">
+            {{'::RulesValidationMessage:Maximum' | abpLocalization:formulario.controls['controlarClavesAnteriorCantidad'].errors?.max.max }}
+            </small>
+        </div> -->
+  
+        </div>
+      </fieldset>
+     
+
+  <hr />
+
+  <button type="submit" class="btn btn-primary" [disabled]="guardando">
+    <i class="fa fa-spinner fa-spin" *ngIf="guardando"></i> 
+    {{ '::Save' | abpLocalization }}
+  </button>
+</form>

@@ -1,0 +1,78 @@
+<div class="card">
+    <h3 class="card-title">Reconocimiento facial</h3>
+    <div class="card-body" *ngIf="mostrarPantallaInicial">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="font-weight-bold text-uppercase text-danger">Muy importante</h4>
+                <p>Antes de iniciar el reconocimiento facial lea las siguientes recomendaciones:</p>
+                <ul>
+                    <li>Verifique que la cámara no esté siendo utilizada por otra aplicación.</li>
+                    <li>No utilizar artículos como: gafas, mascarillas, lentes y gorras.</li>
+                    <li>Ubicarse en un sitio con buena iluminación, preferible luz natural sin reflejos.</li>
+                    <li>En el "Reconocimiento Facial" se le pedirá enmarcarse en un óvalo, siga las itrucciones que se
+                        indiquen.
+                    </li>
+                    <li>Evite realizar movimientos bruscos a la cámara mienstras realice el reconocimiento facial.</li>
+                    <li>Su mirada siempre debe estar dirigida a su cámara de video.</li>
+                    <li>Utilice el navegador Chrome.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button class="btn btn-primary btn-sm mr-1" type="button" (click)="continuarPantallaIPrincipal()"><i
+                        class="fa fa-arrow-right mr-1"></i>Continuar</button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="card-body text-center" *ngIf="mostrarPantallaPrincipal">
+        <div class="wrapping-box-container">
+            <div class="row">
+                <div class="col-12">
+                    <div id="controls" class="controls">
+                        <button id="compareProfilePict-button" disabled (click)="compararFoto()"
+                            class="btn btn-primary btn-sm mr-1"><i class="fa fa-user mr-1"></i>Iniciar reconocimiento
+                            facial</button>
+
+                        <p id="status">Inicializando...</p>
+
+                    </div>
+
+                    <div id="custom-logo-container">
+                        <img class="facetec-logo" src="../assets/images/logoCancilleria.png">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row mt-2">
+                <div class="mt-2 col-12 text-center">
+                    <button class="btn btn-secondary btn-sm mr-1" type="button" (click)="regresarPantallaInicial()"><i
+                            class="fa fa-arrow-left mr-1"></i>Anterior</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row text-center" *ngIf="mostrarPantallaFinalExito">
+        <div class="col-12">
+            <h6 class="font-weight-bold text-uppercase text-success">El proceso de reconocimiento facial ha sido
+                satisfactorio</h6>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="mostrarPantallaFinalError">
+        <div class="col-12">
+            <h6 class="font-weight-bold text-uppercase text-danger">El proceso de reconocimeinto facial ha sido
+                inválido. Un funcionario se comunicará con usted, vía telefónica o correo electrónico, para continuar
+                con el proceso. Por favor seleccione guardar.
+            </h6>
+        </div>
+    </div>
+
+</div>

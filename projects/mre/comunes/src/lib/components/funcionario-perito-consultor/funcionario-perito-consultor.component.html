@@ -1,0 +1,35 @@
+<lib-form-template [formTitle]="formTitle" hasButtonClose="true" (clickedButtonClose)="onCloseModal()">
+    <lib-links form-header></lib-links>
+    <div class="col" form-content>
+        <br>
+        <lib-tabs-view [tabsHeader]="tabsHeader" (tabsVisited)="comprobarLinkVistados($event)" [cantTabs]='cantTabs'>
+            <lib-form-requisitios [tabDataSource]="tabDataSourceRequisitios" (rowClicked)="rowClickedEvent($event)"
+                tab0></lib-form-requisitios>
+
+            <lib-datos-personales [formData]="formData" [visaTitular]="visaTitular"
+                [datosSolicitante]="datosSolicitante" [datosBeneficiario]="datosBeneficiario" [srcImagen]="srcImagen"
+                tab1>
+            </lib-datos-personales>
+
+            <lib-domicilio-pasaporte-visa [formData]="formData"
+                [datosDomicilioBeneficiario]="datosDomicilioBeneficiario"
+                [datosPasaporteBeneficiario]="datosPasaporteBeneficiario"
+                [datosVisaBeneficiario]="datosVisaBeneficiario" tab2></lib-domicilio-pasaporte-visa>
+
+            <lib-movimiento-migratorio tab3 [tabDataSource]='tabDataSourceMovimientoMigratorio'>
+            </lib-movimiento-migratorio>
+
+            <lib-multas *ngIf="verficarNegFuncionrio" tab4 [tabDataSource]='tabDataSourceMultas'
+                (rowClicked)="rowClickedEvent($event)"></lib-multas>
+
+            <lib-soporte-gestion *ngIf="verficarNegFuncionrio" tab5 [tabDataSource]="tabDataSourceSoporteGestion"
+                (rowClicked)="rowClickedEvent($event)" (cambioListaSoporteGestion)="cambioSoporteGestion($event)">
+            </lib-soporte-gestion>
+
+            <lib-table-view tab6 *ngIf='mostrarInformacionPagoTramite' [tabHeader]='tabHeaderInformacionPago'
+                [tabDataSource]='tabDataSourceInformacionPago'></lib-table-view>
+        </lib-tabs-view>
+        <hr>
+        <ng-content></ng-content>
+    </div>
+</lib-form-template>

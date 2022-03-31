@@ -1,0 +1,7 @@
+.mensajeBoard{
+ top:30px;
+ right: 40px;
+ position: fixed;
+ z-index: 1200;
+ width: 200px;
+}

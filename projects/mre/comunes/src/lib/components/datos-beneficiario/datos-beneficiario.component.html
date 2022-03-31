@@ -1,0 +1,167 @@
+<div class="card-body">
+    <hr *ngIf="visaTitular">
+    <h3 class="card-title">Datos Beneficiario</h3>
+    <!-- <form [formGroup]="formData">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-2">
+                    <img class="img-fluid" [src]="srcImagen" alt="">
+                </div>
+                <div class="col-5">
+                    <lib-input-field *ngFor="let item of arrField1" [formControlData]="formData"
+                        placeHolder={{item.placeHolder}} typeInput={{item.typeInput}} icon={{item.icon}}
+                        [contentInfo]="item.contentInfo" [formCtrlName]='item.formCtrolName'
+                        [disabledx]='item.disabledx'></lib-input-field>
+                </div>
+                <div class="col-5">
+                    <lib-input-field *ngFor="let item of arrField2" [formControlData]="formData"
+                        placeHolder={{item.placeHolder}} typeInput={{item.typeInput}} icon={{item.icon}}
+                        [contentInfo]="item.contentInfo" [formCtrlName]='item.formCtrolName'
+                        [disabledx]='item.disabledx'></lib-input-field>
+                    <div class="row">
+                        <div class="col">
+                            <lib-input-field [formControlData]="formData" placeHolder="Fecha nacimiento"
+                                typeInput="date" formCtrlName='fechaSolicitudBeneficiario' icon="fas fa-user-circle">
+                            </lib-input-field>
+                        </div>
+                        <div class="col">
+                            <lib-input-field [formControlData]="formData" placeHolder="Edad" typeInput="text"
+                                formCtrlName='edadBeneficiario' icon="fas fa-user-circle"></lib-input-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <hr>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <lib-input-field *ngFor="let item of arrField3" [formControlData]="formData"
+                        placeHolder={{item.placeHolder}} typeInput={{item.typeInput}} icon={{item.icon}}
+                        [contentInfo]="item.contentInfo" [formCtrlName]='item.formCtrolName'
+                        [disabledx]='item.disabledx'></lib-input-field>
+                </div>
+                <div class="col col-md-6 col-sm-12">
+                    <lib-input-field *ngFor="let item of arrField4" [formControlData]="formData"
+                        placeHolder={{item.placeHolder}} typeInput={{item.typeInput}} icon={{item.icon}}
+                        [contentInfo]="item.contentInfo" [formCtrlName]='item.formCtrolName'
+                        [disabledx]='item.disabledx'></lib-input-field>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <hr>
+            <div class="row">
+                <div class="col-md-1">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
+                        [checked]='!radChecked' disabled>
+                    <label class="form-check-label" for="flexRadioDefault1"> Si </label>
+                </div>
+                <div class="col-md-1">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
+                        [checked]='!radChecked' disabled>
+                    <label class="form-check-label" for="flexRadioDefault1">No </label>
+                </div>
+                <div class="col-md-3">
+                    <lib-input-field [formControlData]="formData" placeHolder="% Discapacidad" typeInput="text"
+                        formCtrlName='porcientoDiscapacidadBeneficiario' icon="fas fa-user-circle" [disabledx]=true>
+                    </lib-input-field>
+                </div>
+                <div class="col-md-7">
+                    <lib-input-field [formControlData]="formData" placeHolder="Nro. carnet CONADIS/MSP" typeInput="text"
+                        formCtrlName='numeroCarnetConadisBeneficiario' icon="fas fa-user-circle" [disabledx]=true>
+                    </lib-input-field>
+                </div>
+            </div>
+        </div>
+    </form> -->
+
+    <div class="row">
+        <div class="col-2"><img class="img-fluid" [src]="srcImagen" alt=""></div>
+        <div class="col-10">
+
+            <div class="row">
+                <div class="col-2"><label class="font-weight-bolder">Fecha de Solicitud:</label>
+                </div>
+                <div class="col-4"><label>{{datosBeneficiario.fechaSolicitud}}</label></div>
+                <div class="col-2"><label class="font-weight-bolder">Número registro MDG:</label>
+                </div>
+                <div class="col-4"><label>{{datosBeneficiario.numeroMdg}}</label></div>
+            </div>
+            <div class="row">
+                <div class="col-2"><label class="font-weight-bolder">Primer Apellido:</label></div>
+                <div class="col-4"><label>{{datosBeneficiario.primerApellido}}</label></div>
+                <div class="col-2"><label class="font-weight-bolder">Nacionalidad:</label></div>
+                <div class="col-4"><label>{{datosBeneficiario.nacionalidad}}</label></div>
+            </div>
+            <div class="row">
+                <div class="col-2"><label class="font-weight-bolder">Segundo Apellido:</label>
+                </div>
+                <div class="col-4"><label>{{datosBeneficiario.segundoApellido}}</label></div>
+                <div class="col-2"><label class="font-weight-bolder">Ciudad nacimiento:</label>
+                </div>
+                <div class="col-4"><label>{{datosBeneficiario.ciudadNacimiento}}</label></div>
+            </div>
+            <div class="row">
+                <div class="col-2"><label class="font-weight-bolder">Nombre Completo:</label></div>
+                <div class="col-4"><label>{{datosBeneficiario.nombreCompleto}}</label></div>
+                <div class="col-2"><label class="font-weight-bolder">Fecha nacimiento:</label>
+                </div>
+                <div class="col-2"><label>{{datosBeneficiario.fechaNacimiento}}</label></div>
+                <div class="col-1"><label class="font-weight-bolder">Edad:</label></div>
+                <div class="col-1"><label>{{datosBeneficiario.edad}}</label></div>
+            </div>
+            <div class="row">
+                <div class="col-2"><label class="font-weight-bolder">Estado civil:</label></div>
+                <div class="col-4"><label>{{datosBeneficiario.estadoCivil}}</label></div>
+                <div class="col-2"><label class="font-weight-bolder">Género:</label></div>
+                <div class="col-4"><label>{{datosBeneficiario.genero}}</label></div>
+            </div>
+            <div class="row">
+                <div class="col-2"><label class="font-weight-bolder">Correo electrónico:</label>
+                </div>
+                <div class="col-4"><label>{{datosBeneficiario.correoElectronico}}</label></div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">Discpacidad:</label></div>
+        <div class="col-2"><label>{{datosBeneficiario.tieneDiscapacidad}}</label></div>
+        <div class="col-2"><label class="font-weight-bolder">% Discapacidad:</label>
+        </div>
+        <div class="col-2"><label>{{datosBeneficiario.porcientoDiscapacidad}}</label></div>
+        <div class="col-2"><label class="font-weight-bolder">Nro. carnet
+                CONADIS/MSP:</label></div>
+        <div class="col-2"><label>{{datosBeneficiario.numeroCarnetConadis}}</label></div>
+    </div>
+
+</div>
+
+<hr />
+
+<div class="card-body">
+    <h3 class="card-title">Datos Visa</h3>
+
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">Calidad migratoria:</label>
+        </div>
+        <div class="col-4"><label>{{datosBeneficiario.calidadMigratoria}}</label></div>
+        <div class="col-2"><label class="font-weight-bolder">Grupo:</label>
+        </div>
+        <div class="col-4"><label>{{datosBeneficiario.grupo}}</label></div>
+    </div>
+
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">Tipo de visa:</label>
+        </div>
+        <div class="col-4"><label>{{datosBeneficiario.tipoVisa}}</label></div>
+        <div class="col-2"><label class="font-weight-bolder">Actividad a desarrollar:</label>
+        </div>
+        <div class="col-4"><label>{{datosBeneficiario.actividadDesarrollar}}</label></div>
+    </div>
+
+</div>

@@ -1,0 +1,153 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col col-md-6">
+                <h5 class="card-title">
+                    {{ 'AdministrativeUnit::Exoneration:Exonerations' | abpLocalization }} [{{agreementName}}]
+                </h5>
+            </div>
+            <div class="text-right col col-md-6">
+                <div class="text-lg-right pt-2">
+                    <button description="create" class="btn btn-primary" type="button" (click)="addExoneration()">
+            <i class="fa fa-plus mr-1"></i>
+            <span>{{ 'AdministrativeUnit::Exoneration:AddExoneration' | abpLocalization }}</span>
+          </button>
+                    <button type="button" class="btn btn-secondary ml-2" routerLink="/agreement/"><i class="fa fa-arrow-left"
+              aria-hidden="true"></i> {{ '::Back' | abpLocalization }}
+          </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <ngx-datatable [rows]="exoneration.items" [count]="exoneration.totalCount" [list]="list" default>
+
+            <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="150" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div ngbDropdown container="body" class="d-inline-block">
+                        <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" ngbDropdownToggle>
+              <i class="fa fa-cog mr-1"></i>{{ '::Actions' | abpLocalization }}
+            </button>
+                        <div ngbDropdownMenu>
+                            <button ngbDropdownItem (click)="editExoneration(row.servicioId)">
+                {{ '::Edit' | abpLocalization }}
+              </button>
+                            <button ngbDropdownItem (click)="removeExoneration(row.servicioId)">
+                {{ '::Delete' | abpLocalization }}
+              </button>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column [name]="'AdministrativeUnit::Exoneration:TipoExoneracion' | abpLocalization" prop="tipoExoneracion">
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'AdministrativeUnit::Exoneration:Service' | abpLocalization" prop="servicio">
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'AdministrativeUnit::Exoneration:ServiceType' | abpLocalization" prop="tipoServicio">
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'AdministrativeUnit::Exoneration:Value' | abpLocalization" prop="valor">
+            </ngx-datatable-column>
+
+        </ngx-datatable>
+    </div>
+</div>
+
+<abp-modal size="md" [(visible)]="isModalOpen" [busy]="modalBusy">
+    <ng-template #abpHeader>
+        <h3>{{'AdministrativeUnit::Exoneration:AddExoneration' | abpLocalization }}</h3>
+    </ng-template>
+
+    <ng-template #abpBody>
+        <form id="editForm" [formGroup]="form" (ngSubmit)="save()">
+
+            <div class="form-group">
+                <label for="tipo-exoneracion-id">{{'AdministrativeUnit::Exoneration:TipoExoneracion' | abpLocalization }}</label><small class="text-danger"> * </small>
+                <select class="form-control" id="tipo-exoneracion-id" formControlName="tipoExoneracionId" (change)="onSelectTipoExoneracion($event.target.value)">
+                    <option value="null" disabled>{{'::SelectValue' | abpLocalization }}</option>
+                    <option value="{{t.id}}" *ngFor="let t of tipoExoneracion ">{{ t.nombre }}</option>
+                </select>
+                <div *ngIf="form.controls['tipoExoneracionId'].invalid && (form.controls['tipoExoneracionId'].dirty || form.controls['tipoExoneracionId'].touched || submitted)">
+                    <small class="text-danger" *ngIf="form.controls[ 'tipoExoneracionId'].errors?.required">
+                      {{'::RulesValidationMessage:Required' | abpLocalization }}
+                  </small>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="service-id">{{'AdministrativeUnit::Exoneration:Service' | abpLocalization }}</label><small class="text-danger"> * </small>
+                <select class="form-control" id="service-id" formControlName="servicioId">
+                  <option [ngValue]="null" disabled>{{'::SelectValue' | abpLocalization }}</option>
+                  <option [ngValue]="c.id" *ngFor="let c of service"> {{ c.nombre }}</option>
+                </select>
+                <div *ngIf="form.controls['servicioId'].invalid && (form.controls['servicioId'].dirty || form.controls['servicioId'].touched || submitted)">
+                    <small class="text-danger" *ngIf="form.controls['servicioId'].errors?.required ">
+                      {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="value">{{'AdministrativeUnit::Exoneration:Value' | abpLocalization }}</label>
+                <small class="text-danger"> * </small>
+                <input type="number" id="value" class="form-control" formControlName="valor" />
+                <div *ngIf="form.controls['valor'].invalid && (form.controls[ 'valor'].dirty || form.controls['valor'].touched || submitted)">
+                    <small class="text-danger" *ngIf="form.controls['valor'].errors?.required">
+                      {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+
+                    <small class="text-danger" *ngIf="form.controls['valor'].errors?.pattern">
+                        {{'AdministrativeUnit::TariffHeading:ValidacionDecimales' | abpLocalization }}
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="isExoneracionEntidad">
+                <label for="entidad-auspiciante-id ">{{'AdministrativeUnit::Exoneration:EntidadAuspiciante' | abpLocalization }}</label>
+                <select class="form-control" id="entidad-auspiciante-id" formControlName="entidadAuspicianteId">
+                  <option [ngValue]="null" >{{'::SelectValue' | abpLocalization }}</option>
+                  <option [ngValue]="t.id" *ngFor="let t of entidadAuspiciante"> {{ t.nombre }}</option>
+                </select>
+            </div>
+
+
+            <div class="form-group" *ngIf="isExoneracionNacionalidad">
+                <label for="pais-id">{{'AdministrativeUnit::Exoneration:Pais' | abpLocalization }}</label>
+                <select class="form-control" id="pais-id" formControlName="paisId">
+                <option [ngValue]="null" >{{'::SelectValue' | abpLocalization }}</option>
+                <option [ngValue]="c.code" *ngFor="let c of paises"> {{ c.name }}</option>
+              </select>
+            </div>
+
+            <div class="form-group" *ngIf="isExoneracionEdad">
+                <label for="edad-inicial">{{ 'AdministrativeUnit::Exoneration:EdadInicial' | abpLocalization }}</label>
+                <input type="number" class="form-control " id="edad-inicial" formControlName="edadInicial" maxlength="2" />
+            </div>
+
+            <div class="form-group" *ngIf="isExoneracionEdad">
+                <label for="edad-final">{{ 'AdministrativeUnit::Exoneration:EdadFinal' | abpLocalization }}</label>
+                <input type="number" class="form-control" id="edad-final" formControlName="edadFinal" maxlength="2" />
+            </div>
+
+
+            <div class="custom-checkbox custom-control mb-2" *ngIf="isExoneracionDiscapacidad">
+                <input type="checkbox" id="discapacitado-field" class="custom-control-input" formControlName="discapacitado" />
+                <label for="discapacitado-field" class="custom-control-label">{{'AdministrativeUnit::Exoneration:Discapacitado' | abpLocalization}}</label>
+            </div>
+
+        </form>
+    </ng-template>
+
+    <ng-template #abpFooter>
+
+        <button type="button" class="btn btn-secondary" abpClose>
+      {{ '::Cancel' | abpLocalization }}
+    </button>
+
+        <abp-button iconClass="fa fa-check" (click)="save()">
+            {{'::Save' | abpLocalization}}
+        </abp-button>
+
+    </ng-template>
+</abp-modal>

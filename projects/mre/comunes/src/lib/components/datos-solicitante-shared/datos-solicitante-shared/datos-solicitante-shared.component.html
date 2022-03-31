@@ -1,0 +1,54 @@
+<div class="card-body">
+    <h3 class="card-title">Datos Solicitante</h3>
+    <!-- <form [formGroup]="formData">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <lib-input-field *ngFor="let item of arrField1" [formControlData]="formData"
+                    placeHolder={{item.placeHolder}} typeInput={{item.typeInput}} icon={{item.icon}}
+                    [contentInfo]="item.contentInfo" [formCtrlName]='item.formCtrolName' [disabledx]='item.disabledx'>
+                </lib-input-field>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label">Dirección:</label>
+                <textarea class="form-control" rows="2" placeholder=""
+                    formControlName='direccionSolicitante'></textarea>
+                <lib-input-field *ngFor="let item of arrField2" [formControlData]="formData"
+                    placeHolder={{item.placeHolder}} typeInput={{item.typeInput}} icon={{item.icon}}
+                    [contentInfo]="item.contentInfo" [formCtrlName]='item.formCtrolName'></lib-input-field>
+            </div>
+        </div>
+    </form> -->
+
+
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">Cédula:</label>
+        </div>
+        <div class="col-4"><label>{{datosSolicitanteCompartido.cedula}}</label></div>
+        <div class="col-2"><label class="font-weight-bolder">Teléfono:</label>
+        </div>
+        <div class="col-4"><label>{{datosSolicitanteCompartido.telefono}}</label></div>
+    </div>
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">Nacionalidad:</label>
+        </div>
+        <div class="col-4"><label>{{datosSolicitanteCompartido.nacionalidad}}</label></div>
+        <div class="col-2"><label class="font-weight-bolder">Edad:</label>
+        </div>
+        <div class="col-4"><label>{{datosSolicitanteCompartido.edad}}</label></div>
+    </div>
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">País:</label>
+        </div>
+        <div class="col-4"><label>{{datosSolicitanteCompartido.pais}}</label></div>
+        <div class="col-2"><label class="font-weight-bolder">Correo electrónico:</label>
+        </div>
+        <div class="col-4"><label>{{datosSolicitanteCompartido.correoElectronico}}</label></div>
+    </div>
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">Ciudad:</label>
+        </div>
+        <div class="col-4"><label>{{datosSolicitanteCompartido.ciudad}}</label></div>
+    </div>
+
+
+</div>

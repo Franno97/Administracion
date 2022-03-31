@@ -1,0 +1,14 @@
+.previsualizarDocument{
+    height: 500px;
+    background-color: gray;
+}
+button:disabled{
+    cursor: not-allowed;
+}
+button{
+    font-size: smaller;
+}
+
+.pdfBox{
+    min-height: 400px;
+}

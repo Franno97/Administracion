@@ -1,0 +1,50 @@
+td{
+    border: inset 0pt;
+    // padding-top: 20px;
+    padding: 0px;
+    // padding-bottom: 20px;
+}
+
+.circle{
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    background-color: red;
+    margin: 0px;
+    padding: 0px;
+}
+.derA{
+    width: 140px;
+    height: 5px;
+    background-color: red;
+    margin-top: 70px;
+}
+.abajo{
+    width: 5px;
+    height: 60px;
+    background-color: red;
+}
+.triangulo { 
+    width: 0; 
+    border-left: 5px solid transparent; 
+    border-right: 5px solid transparent; 
+    border-top: 10px solid #7EB4FC; 
+}
+.tableInView td{
+    border: inset 0pt;
+    padding: 0px;
+}
+.der{
+    width: 30px;
+    height: 5px;
+    background-color: blue;
+    padding: 0px;
+    margin-top: 40px;
+}
+.arriba-abajo{
+    width: 5px;
+    height: 30px;
+    background-color: blue;
+    padding: 0px;
+    margin-left: 40px;
+}

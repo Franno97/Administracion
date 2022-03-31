@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-md-9">
+        <!-- <lib-table-view [tabHeader]='tabHeader' [tabDataSource]='tabDataSource' (rowClicked)="rowClickedEvent($event)">
+        </lib-table-view> -->
+        <ngx-datatable [rows]="registrosMostrar" [count]="registrosMostrar.length"
+            [messages]="{emptyMessage: 'No existen registros a mostrar', totalMessage: 'Total'}" default>
+
+            <ngx-datatable-column [name]="'Nombre'" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{row.nombre}}
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'Descripción'" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div *ngIf="!row.permiteEditarObservacion">{{row.descripcion}}</div>
+                    <div *ngIf="row.permiteEditarObservacion" class="form-group mb-0">
+                        <textarea rows="1" placeholder="Observaciones" class="form-control" maxlength="500"
+                            (change)="cambioObservaciones($event.target.value,row.consecutivo)"></textarea>
+                    </div>
+
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [sortable]="false" [maxWidth]="100">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <button *ngIf="row.permiteVer" type="button" class="btn btn-sm" (click)="verImagen(row.consecutivo)"
+                        title="Ver"><i class="fas fa-eye"></i></button>
+                    <button *ngIf="row.permiteEliminar" type="button" class="btn btn-sm"
+                        (click)="eliminarImagen(row.consecutivo)" title="Eliminar"><i class="fa fa-trash"></i></button>
+                </ng-template>
+            </ngx-datatable-column>
+
+
+        </ngx-datatable>
+    </div>
+    <div class="col-md-3">
+        <div class="file-upload card">
+            <button class="btn btn-primary" (click)="InpuButton.click()"> Agregar documento</button>
+            <div class="image-upload-wrap">
+                <input class="file-upload-input" #InpuButton type='file' accept="application/pdf,image/*"
+                    (change)="selectFile($event)">
+                <div class=" file-drag-area">
+                    <h4>Arrastrar y soltar archivo</h4>
+                    <div *ngIf="uploadResponse.status === 'progress'">
+
+
+                        <div role="progressbar" [style.width.%]="uploadResponse.message" aria-valuenow="25"
+                            aria-valuemin="0" aria-valuemax="100">
+                            {{uploadResponse.message}}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="uploadResponse.status === 'progress'">
+        <div role="progressbar" [style.width.%]="uploadResponse.message" aria-valuenow="25" aria-valuemin="0"
+            aria-valuemax="100">
+            {{uploadResponse.message}}%
+        </div>
+    </div>
+    <!-- <lib-ver-archivo [tipoArchivo] = "tipoArchivo" [pathArchivo] = 'pathArchivo'></lib-ver-archivo> -->

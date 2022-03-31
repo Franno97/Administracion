@@ -1,0 +1,32 @@
+<lib-funcionario-perito-consultor [formTitle]='formTitle' (allLinkVisited)="allLinkVisited($event)"
+    [formData]='formData' (rowClicked)="rowClickedEvent($event)">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="form-check form-check-inline" *ngFor="let item of radioButtons;index as i">
+                <label class="btn btn-outline-info btn-sm" [for]="item.idFor">
+                    {{item.label}}
+                    <input class="btn-check" type="radio" name="consultorRadioButton" [id]="item.idFor"
+                        [checked]="i === radioButtonChecked" (click)="clicRadioButton(i)" [disabled]="item.disabled">
+                </label>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+
+        <div class="col-md-12 col-sm-12" *ngIf="requisitos">
+            <lib-observaciones [requisitos]="requisitos" [observacionesName]="observacionesName"
+                [observacionesModel]="observacionesModel" [observacionesAnteriores]="observacionesAnteriores"
+                (observChange)="observChange($event)"></lib-observaciones>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row justify-content-end">
+            <div class="form-group">
+                <button class="btn btn-primary botonAlign" (click)="onSubmit()"
+                    [disabled]="!linksVisitedAll">Guardar</button>
+            </div>
+        </div>
+
+    </div>
+</lib-funcionario-perito-consultor>

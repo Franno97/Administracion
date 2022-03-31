@@ -1,0 +1,77 @@
+<div class="card">
+
+    <div class="card-body">
+        <h3 class="card-title">Cita</h3>
+
+        <div *ngIf="showPreCheckError" class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <p class="font-weight-bold">{{preCheckMensajeError}}</p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div *ngIf="mostrarFormularioDisponibilidad">
+
+            <form [formGroup]="formularioDisponibilidad" (ngSubmit)="continuarFormularioValidacion()">
+
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <ngb-datepicker #d [maxDate]="maxDate" [minDate]="minDate" formControlName="fecha"
+                            (ngModelChange)="cambioFechaHorario()">
+                        </ngb-datepicker>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h5>Horario</h5>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <div style="height: 200px; overflow-y: scroll;">
+                                    <div class="btn-group btn-group-toggle btn-group-vertical" ngbRadioGroup
+                                        name="radioBasic" formControlName="horario">
+                                        <label ngbButtonLabel class="btn btn-light"
+                                            *ngFor="let horario of listaHorarios">
+                                            <input ngbButton type="radio" [value]="horario">{{horario}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div *ngIf="mostrarMensajeErrorCrear" class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <p class="font-weight-bold">{{mensajeErrorCrear}}</p>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+
+    </div>
+
+
+</div>

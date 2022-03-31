@@ -1,0 +1,61 @@
+
+td{
+    padding: 3px;
+    font-size: 14px;
+}
+.update{
+    margin-top: 20px;
+}
+th{
+    font-size: 14px;
+}
+i{
+    cursor: pointer;
+    color: #3f51b5;
+    width: 100%;
+}
+.iconDisabled{
+    color: gray;
+    cursor: not-allowed;
+}
+.iconEnabled{
+    color: #3f51b5;
+    cursor: pointer;
+}
+textarea{
+    width: 100%;
+}
+select{
+    font-size: 14px;
+}
+// ngb-pagination{
+//     font-size: 14px;
+//     a{
+//         font-size: 7px;
+//     }
+// }
+::ng-deep.page-link{
+    // font-size: 18px;
+    padding: 0px 4px 0px 4px;
+}
+.input-group-text{
+    border-radius: 0 0.375rem 0.375rem 0;
+    padding: 8px;
+    height: 24px;
+}
+:host input {
+    // padding: 0px 8px 0px 8px;
+    margin-bottom: 0.3rem;
+    height: 24px;
+}
+
+span {
+    margin-bottom: 3px;
+}
+
+label {
+    font-size: smaller;
+    margin-bottom: 0.1em;
+}
+
+//--------------------------

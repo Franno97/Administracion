@@ -1,0 +1,54 @@
+<div class="card-body">
+    <hr>
+    <h3 class="card-title">Documento de identificación beneficiario</h3>
+    <!-- <form [formGroup]="formData">
+        <div class="form-group">
+            <hr>
+            <h3 class="card-title">Documento de identificación beneficiario</h3>
+            <div class="row justify-content-end">
+                <div class="col-md-6 col-sm-12">
+                    <lib-input-field *ngFor="let item of arrField3" [formControlData]="formData"
+                        placeHolder={{item.placeHolder}} typeInput={{item.typeInput}} icon={{item.icon}}
+                        [contentInfo]="item.contentInfo" [formCtrlName]='item.formCtrolName'></lib-input-field>
+                </div>
+                <div class="col col-md-6 col-sm-12">
+                    <lib-input-field *ngFor="let item of arrField4" [formControlData]="formData"
+                        placeHolder={{item.placeHolder}} typeInput={{item.typeInput}} icon={{item.icon}}
+                        [contentInfo]="item.contentInfo" [formCtrlName]='item.formCtrolName'></lib-input-field>
+                </div>
+            </div>
+        </div>
+    </form> -->
+
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">Número:</label>
+        </div>
+        <div class="col-4"><label>{{datosPasaporteBeneficiario.numero}}</label></div>
+        <div class="col-2"><label class="font-weight-bolder">Fecha Expiracion:</label>
+        </div>
+        <div class="col-4"><label>{{datosPasaporteBeneficiario.fechaExpiracion}}</label></div>
+    </div>
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">Fecha de emisión:</label>
+        </div>
+        <div class="col-4"><label>{{datosPasaporteBeneficiario.fechaEmision}}</label></div>
+        <div class="col-2"><label class="font-weight-bolder">Ciudad emisión:</label>
+        </div>
+        <div class="col-4"><label>{{datosPasaporteBeneficiario.ciudadEmision}}</label></div>
+    </div>
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">País de emisión:</label>
+        </div>
+        <div class="col-4"><label>{{datosPasaporteBeneficiario.paisEmision}}</label></div>
+        <div class="col-2"><label class="font-weight-bolder">Fecha de nacimiento:</label>
+        </div>
+        <div class="col-4"><label>{{datosPasaporteBeneficiario.fechaNacimiento}}</label></div>
+    </div>
+    <div class="row">
+        <div class="col-2"><label class="font-weight-bolder">Nombre completo:</label>
+        </div>
+        <div class="col-4"><label>{{datosPasaporteBeneficiario.nombreCompleto}}</label></div>
+    </div>
+
+
+</div>

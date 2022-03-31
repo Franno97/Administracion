@@ -1,0 +1,137 @@
+<div class="card">
+    <div class="card-header">
+
+        <div class="row">
+            <div class="col col-md-6">
+                <h5 class="card-title">
+                    {{ 'AdministrativeUnit::AdministrativeUnitService' | abpLocalization }} [{{administrativeUnitName}}]
+                </h5>
+            </div>
+            <div class="text-right col col-md-6">
+
+                <div class="text-lg-right pt-2">
+                    <button *abpPermission="'AdministrativeUnit.AdministrativeUnit.Update'" id="create" class="btn btn-primary" type="button" (click)="addService()">
+            <i class="fa fa-plus mr-1"></i>
+            <span>{{ 'AdministrativeUnit::AdministrativeUnitService:AddService' | abpLocalization }}</span>
+          </button>
+
+                    <button type="button" class="btn btn-secondary ml-2" routerLink="/admin-unit/"><i class="fa fa-arrow-left"
+            aria-hidden="true"></i>
+          {{ '::Back' | abpLocalization }}</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <ngx-datatable [rows]="administrativeUnitServices.items" [count]="administrativeUnitServices.totalCount" [list]="list" default>
+
+            <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="150" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div ngbDropdown container="body" class="d-inline-block">
+                        <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" ngbDropdownToggle>
+              <i class="fa fa-cog mr-1"></i>{{ '::Actions' | abpLocalization }}
+            </button>
+                        <div ngbDropdownMenu>
+                            <button *abpPermission="'AdministrativeUnit.AdministrativeUnit.Update'" ngbDropdownItem (click)="edit(row.servicioId)">
+                {{ '::Edit' | abpLocalization }}
+              </button>
+                            <button *abpPermission="'AdministrativeUnit.AdministrativeUnit.Update'" ngbDropdownItem (click)="delete(row.servicioId)">
+                {{ '::Delete' | abpLocalization }}
+              </button>
+                            <button *abpPermission="'AdministrativeUnit.AdministrativeUnit.Update'" ngbDropdownItem routerLink="/seceuncial-book/{{administrativeUnitId}}/{{row.servicioId}}/{{row.servicio}}">
+                {{ 'AdministrativeUnit::AdministrativeUnitService:SequentialBook' | abpLocalization }}
+              </button>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+
+
+            <ngx-datatable-column [name]="'AdministrativeUnit::Service:Name' | abpLocalization" prop="servicio" [sortable]="false">
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'AdministrativeUnit::AdministrativeUnitService:PaymentType' | abpLocalization" prop="tipoPago" [sortable]="false">
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'AdministrativeUnit::AdministrativeUnitService:IsActive' | abpLocalization" prop="activo" >
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <i class="fa fa-times-circle text-danger" aria-hidden="true" *ngIf="!row.activo"></i>
+                    <i class="fa fa-check-circle text-success" aria-hidden="true" *ngIf="row.activo"></i>
+                </ng-template>
+            </ngx-datatable-column>
+
+
+
+        </ngx-datatable>
+    </div>
+</div>
+
+<abp-modal size="md" [(visible)]="isModalOpen" [busy]="modalBusy">
+    <ng-template #abpHeader>
+        <h3>{{'AdministrativeUnit::AdministrativeUnitService' | abpLocalization }}</h3>
+    </ng-template>
+
+    <ng-template #abpBody>
+        <form [formGroup]="form" (ngSubmit)="save()">
+
+            <div class="form-group" *ngIf="isNew">
+                <label for="servicioId">{{'AdministrativeUnit::Service:Name' | abpLocalization }}</label><small class="text-danger">
+                    *
+                </small>
+                <select class="form-control" id="servicioId" formControlName="servicioId">
+                    <option [ngValue]="null" disabled>{{'::SelectValue' | abpLocalization }}</option>
+                    <option [ngValue]="service.id" *ngFor="let service of service"> {{ service.nombre }}
+                    </option>
+                </select>
+                <div
+                    *ngIf="form.controls['servicioId'].invalid && (form.controls['servicioId'].dirty || form.controls['servicioId'].touched || submitted)">
+                    <small class="text-danger" *ngIf="form.controls['servicioId'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="!isNew">
+                <label for="service">{{'AdministrativeUnit::Service:Name' | abpLocalization }}</label>
+                <input type="text" name="service" id="service" class="form-control" [value]="selectedAdministrativeUnitService.servicio" readonly />
+            </div>
+
+
+            <div class="form-group">
+                <label for="tipoPagoId">{{'AdministrativeUnit::AdministrativeUnitService:PaymentType' | abpLocalization }}</label><small class="text-danger"> *
+        </small>
+                <select class="form-control" id="tipoPagoId" formControlName="tipoPagoId">
+          <option [ngValue]="null" disabled>{{'::SelectValue' | abpLocalization }}</option>
+          <option [ngValue]="payment.id" *ngFor="let payment of paymentType"> {{ payment.nombre }}
+          </option>
+        </select>
+                <div *ngIf="form.controls['tipoPagoId'].invalid && (form.controls['tipoPagoId'].dirty || form.controls['tipoPagoId'].touched || submitted)">
+                    <small class="text-danger" *ngIf="form.controls['tipoPagoId'].errors?.required">
+            {{'::RulesValidationMessage:Required' | abpLocalization }}
+          </small>
+                </div>
+            </div>
+
+            <div class="custom-checkbox custom-control">
+                <input class="custom-control-input" type="checkbox" id="activo" formControlName="activo">
+                <label class="custom-control-label" for="activo">
+          {{'AdministrativeUnit::AdministrativeUnitService:IsActive' | abpLocalization }}
+        </label>
+            </div>
+
+        </form>
+    </ng-template>
+
+
+    <ng-template #abpFooter>
+        <button type="button" class="btn btn-secondary" abpClose>
+      {{ '::Cancel' | abpLocalization }}
+    </button>
+
+        <abp-button iconClass="fa fa-check" (click)="save()">
+            {{'::Save' | abpLocalization}}
+        </abp-button>
+
+    </ng-template>
+
+</abp-modal>

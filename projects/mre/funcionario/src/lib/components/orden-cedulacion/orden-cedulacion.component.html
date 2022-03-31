@@ -1,0 +1,458 @@
+<abp-modal [(visible)]="isModalOpen">
+
+    <div *ngIf="mostrarSectionInicial">
+
+        <ng-template #abpHeader>
+            <h3>Generar orden de cedulación</h3>
+        </ng-template>
+
+        <ng-template #abpBody>
+
+            <h4 class="form-section col-sm-12">
+                <i class="fa fa-info-circle"></i> Datos personales del beneficiario
+            </h4>
+
+            <div class="row">
+                <div class="col">
+                    <label class="font-weight-bold">Nombres: </label> {{nombres}}
+                </div>
+                <div class="col">
+                    <label class="font-weight-bold">Apellidos: </label> {{apellidos}}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label class="font-weight-bold">Nacionalidad: </label> {{nacionalidad}}
+                </div>
+                <div class="col">
+                    <label class="font-weight-bold">Estado civil: </label> {{estadoCivil}}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label class="font-weight-bold">Fecha nacimiento: </label> {{fechaNacimiento | date:'dd-MM-yyyy'}}
+                </div>
+                <div class="col">
+                    <label class="font-weight-bold">Género: </label> {{genero}}
+                </div>
+            </div>
+
+            <hr>
+
+            <h4 class="form-section col-sm-12">
+                <i class="fa fa-address-card"></i> Información de la Visa
+            </h4>
+
+            <div class="row">
+                <div class="col">
+                    <label class="font-weight-bold">Categoria de visa: </label> {{visaElectronica.categoria}}
+                </div>
+                <div class="col">
+                    <label class="font-weight-bold">Número de visa: </label> {{visaElectronica.numeroVisa}}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label class="font-weight-bold">Fecha de emision visa: </label> {{visaElectronica.fechaEmision | date:'dd-MM-yyyy'}}
+                </div>
+                <div class="col">
+                    <label class="font-weight-bold">Días de vigencia visa: </label> {{visaElectronica.diasVigencia}}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <label class="font-weight-bold">Unidad de otorgamiento visa: </label> {{visaElectronica.unidadAdministrativaNombre}}
+                </div>
+
+            </div>
+
+        </ng-template>
+
+        <ng-template #abpFooter>
+            <button type="button" class="btn btn-secondary" abpClose>
+                <i class="fa fa-times" aria-hidden="true"></i> {{ '::Salir' | abpLocalization }}
+            </button>
+
+            <button type="button" class="btn btn-primary" (click)="obtenerPago()" [disabled]="procesando">
+                <i class="fa fa-spinner fa-spin" *ngIf="procesando"></i>
+                <i class="fa fa-check-circle" aria-hidden="true" *ngIf="!procesando"></i>
+                {{'::Continuar' | abpLocalization}}
+            </button>
+        </ng-template>
+
+    </div>
+
+
+
+    <div *ngIf="mostrarSectionPago">
+
+        <ng-template #abpHeader>
+            <h3>Generar orden de cedulación</h3>
+        </ng-template>
+
+        <ng-template #abpBody>
+
+            <h4 class="form-section col-sm-12">
+                <i class="fa fa-info-circle"></i> Información del pago
+            </h4>
+
+            <form id="pagoForm" [formGroup]="formPago" (ngSubmit)="facturarServicio()">
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <div class="form-group">
+                            <label for="servicio">Servicio: </label><small class="text-danger"> * </small>
+                            <input type="Text" class="form-control" description="servicio" formControlName="servicio" readonly="true">
+                        </div>
+                    </div>
+                    <!-- <div class="form-group col-sm-2"></div> -->
+
+                    <div class="form-group col-sm-6">
+                        <div class="form-group">
+                            <label for="documentoIdentificacion">Documento de identificación: </label><small class="text-danger"> * </small>
+                            <input type="Text" class="form-control" description="documentoIdentificacion" formControlName="documentoIdentificacion" readonly="true">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <div class="form-group">
+                            <label for="arancel">Arancel: </label><small class="text-danger"> * </small>
+                            <input type="Text" class="form-control" description="arancel" formControlName="arancel" readonly="true">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <div class="form-group">
+                            <label for="partidaArancelaria">Partida arancelaria: </label><small class="text-danger"> * </small>
+                            <input type="Text" class="form-control" description="partidaArancelaria" formControlName="partidaArancelaria" readonly="true">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <div class="form-group">
+                            <label for="numeroPartida">Número de partida: </label><small class="text-danger"> * </small>
+                            <input type="Text" class="form-control" description="numeroPartida" formControlName="numeroPartida" readonly="true">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <div class="form-group">
+                            <label for="valorArancel">Valor arancel: </label><small class="text-danger"> * </small>
+                            <input type="Text" class="form-control" description="valorArancel" formControlName="valorArancel" readonly="true">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <div class="form-group">
+                            <label for="valorDescuento">Valor descuento: </label><small class="text-danger"> * </small>
+                            <input type="Text" class="form-control" description="valorDescuento" formControlName="valorDescuento" readonly="true">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <div class="form-group">
+                            <label for="valorTotal">Valor total: </label><small class="text-danger"> * </small>
+                            <input type="Text" class="form-control" description="valorTotal" formControlName="valorTotal" readonly="true">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <div class="form-group">
+                            <label for="ordenPago">Orden pago: </label><small class="text-danger"> * </small>
+                            <input type="Text" class="form-control" description="ordenPago" formControlName="ordenPago" readonly="true">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <div class="form-group">
+                            <label for="numeroTransaccion">Número transacción: </label><small class="text-danger"> * </small>
+                            <input type="Text" class="form-control" description="numeroTransaccion" formControlName="numeroTransaccion" readonly="true">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <div class="form-group">
+                            <label for="facturado">Facturado: </label><small class="text-danger"> * </small>
+                            <input type="Text" class="form-control" description="facturado" formControlName="facturado" readonly="true">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        <div class="form-group">
+                            <label for="observacionPago">Observación: </label>
+                            <input type="Text" class="form-control" description="observacionPago" formControlName="observacionPago" readonly="true">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <div class="form-group">
+                            <label>Comprobante de pago: </label>
+                            <br>
+                            <img class="rounded" [src]="comprobantePago">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-6">
+
+                    </div>
+                </div>
+
+                <!-- <div class="row">
+                    <div class="form-group col-sm-6">
+
+                    </div>
+
+                    <div class="form-group col-sm-6">
+
+                    </div>
+                </div> -->
+            </form>
+
+        </ng-template>
+
+        <ng-template #abpFooter>
+            <button type="button" class="btn btn-secondary" abpClose>
+                <i class="fa fa-times" aria-hidden="true"></i> {{ '::Salir' | abpLocalization }}
+            </button>
+
+            <button type="button" class="btn btn-primary" (click)="facturarServicio()" [disabled]="procesando">
+                <i class="fa fa-spinner fa-spin" *ngIf="procesando"></i>
+                <i class="fa fa-check-circle" aria-hidden="true" *ngIf="!procesando"></i>
+                {{'::Facturar' | abpLocalization}}
+            </button>
+        </ng-template>
+
+    </div>
+
+    <div *ngIf="mostrarSectionFactura">
+
+        <ng-template #abpHeader>
+            <h3>Generar orden de cedulación</h3>
+        </ng-template>
+
+        <ng-template #abpBody>
+            <h4 class="form-section col-sm-12">
+                <i class="fa fa-credit-card"></i> Información de facturación
+            </h4>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <label class="font-weight-bold">Número: </label>
+                </div>
+                <div class="col-sm-10">
+                    <label class="font-weight-bold">{{facturarServicioResponse.numeroFactura}}</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-2">
+                    <label class="font-weight-bold">Ruta: </label>
+                </div>
+                <div class="col-sm-10">
+                    <a href="{{facturarServicioResponse.rutaAlmacenamientoFactura}}" target="blank">{{facturarServicioResponse.rutaAlmacenamientoFactura}}</a>
+                </div>
+            </div>
+
+            <div *ngIf="mostrarFormularioSignatario">
+                <h4 class="form-section col-sm-12">
+                    <i class="fa fa-info-circle"></i> Signatario
+                </h4>
+
+                <form id="generarOdenForm" [formGroup]="form" (ngSubmit)="generarOrden()">
+                    <div class="form-group">
+                        <label for="signatario">Signatario: </label><small class="text-danger"> * </small>
+                        <select class="form-control" id="signatario" formControlName="signatario">
+                            <option [ngValue]="null" disabled>{{'::SelectValue' | abpLocalization }}</option>
+                            <option [ngValue]="s.usuarioId" *ngFor="let s of signatarios.items"> {{ s.nombres + ' ' + s.apellidos }}</option>
+                          </select>
+
+                        <div *ngIf="form.controls['signatario'].invalid && (form.controls['signatario'].dirty || form.controls['signatario'].touched || submitted)">
+                            <small class="text-danger" *ngIf="form.controls['signatario'].errors?.required">
+                            {{'::RulesValidationMessage:Required' | abpLocalization }}
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="observacion">Observación: </label>
+                        <textarea type="Text" class="form-control" description="observacion" formControlName="observacion"></textarea>
+
+                    </div>
+
+                    <div *ngIf="mostrarFormularioConyuge">
+                        <h4 class="form-section col-sm-12">
+                            <i class="fa fa-info-circle"></i> Información del conyuge
+                        </h4>
+
+
+
+                        <div class="form-group">
+                            <label for="conyugeNombre">Nombres conyuge: </label><small class="text-danger"> * </small>
+                            <input type="Text" class="form-control" description="conyugeNombre" formControlName="conyugeNombre">
+
+                            <div *ngIf="form.controls['conyugeNombre'].invalid && (form.controls['conyugeNombre'].dirty || form.controls['conyugeNombre'].touched || submitted)">
+                                <small class="text-danger" *ngIf="form.controls['conyugeNombre'].errors?.required">
+                                {{'::RulesValidationMessage:Required' | abpLocalization }}
+                                </small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="conyugePrimerApellido">Primer apellido conyuge: </label><small class="text-danger"> * </small>
+                            <input type="Text" class="form-control" description="conyugePrimerApellido" formControlName="conyugePrimerApellido">
+
+                            <div *ngIf="form.controls['conyugePrimerApellido'].invalid && (form.controls['conyugePrimerApellido'].dirty || form.controls['conyugePrimerApellido'].touched || submitted)">
+
+                                <small class="text-danger" *ngIf="form.controls['conyugePrimerApellido'].errors?.required">
+                                {{'::RulesValidationMessage:Required' | abpLocalization }}
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="conyugeSegundoApellido">Segundo apellido conyuge: </label><small class="text-danger"> * </small>
+                            <input type="Text" class="form-control" description="conyugeSegundoApellido" formControlName="conyugeSegundoApellido">
+
+                            <div *ngIf="form.controls['conyugeSegundoApellido'].invalid && (form.controls['conyugeSegundoApellido'].dirty || form.controls['conyugeSegundoApellido'].touched || submitted)">
+                                <small class="text-danger" *ngIf="form.controls['conyugeSegundoApellido'].errors?.required">
+                                {{'::RulesValidationMessage:Required' | abpLocalization }}
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="conyugeNacionalidad">Nacionalidad conyuge: </label><small class="text-danger"> * </small>
+                            <select class="form-control" id="conyugeNacionalidad" formControlName="conyugeNacionalidad">
+                                <option [ngValue]="null" disabled>{{'::SelectValue' | abpLocalization }}</option>
+                                <option [ngValue]="c.codigo" *ngFor="let c of catalogoNacionalidades"> {{ c.descripcion }}</option>
+                              </select>
+
+                            <div *ngIf="form.controls['conyugeNacionalidad'].invalid && (form.controls['conyugeNacionalidad'].dirty || form.controls['conyugeNacionalidad'].touched || submitted)">
+                                <small class="text-danger" *ngIf="form.controls['conyugeNacionalidad'].errors?.required">
+                                {{'::RulesValidationMessage:Required' | abpLocalization }}
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="conyugeCorreoElectronico">Correo electrónico conyuge: </label><small class="text-danger"> * </small>
+                            <input type="Text" class="form-control" description="conyugeCorreoElectronico" formControlName="conyugeCorreoElectronico">
+
+                            <div *ngIf="form.controls['conyugeCorreoElectronico'].invalid && (form.controls['conyugeCorreoElectronico'].dirty || form.controls['conyugeCorreoElectronico'].touched || submitted)">
+                                <small class="text-danger" *ngIf="form.controls['conyugeCorreoElectronico'].errors?.required">
+                                {{'::RulesValidationMessage:Required' | abpLocalization }}
+                                </small>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </ng-template>
+
+
+        <ng-template #abpFooter>
+            <button type="button" class="btn btn-primary" (click)="generarOrden()" [disabled]="procesando">
+                <i class="fa fa-spinner fa-spin" *ngIf="procesando"></i>
+                <i class="fa fa-check-circle" aria-hidden="true" *ngIf="!procesando"></i>
+                {{'::Generar orden' | abpLocalization}}
+            </button>
+        </ng-template>
+
+    </div>
+
+    <div *ngIf="mostrarSectionOrdenCedulacion">
+
+        <ng-template #abpHeader>
+            <h3>Orden cedulación</h3>
+        </ng-template>
+
+        <ng-template #abpBody>
+            <div class="row">
+                <div class="col-4 d-flex justify-content-end">
+                    <label class="font-weight-bold">Numero: </label>
+                </div>
+                <div class="col d-flex justify-content-start">
+                    {{generarOrdenCedulacionResponse.numeroOrden}}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4 d-flex justify-content-end">
+                    <label class="font-weight-bold">Código verificación: </label>
+                </div>
+                <div class="col d-flex justify-content-start">
+                    {{generarOrdenCedulacionResponse.codigoVerificacion}}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4 d-flex justify-content-end">
+                    <label class="font-weight-bold">Número transacción: </label>
+                </div>
+                <div class="col d-flex justify-content-start">
+                    {{generarOrdenCedulacionResponse.numeroTransaccion}}
+                </div>
+            </div>
+
+            <div class="col pdfBox">
+                <ngx-extended-pdf-viewer [base64Src]="ordenCedulacionPdf" [height]="'95%'" [useBrowserLocale]="true" [textLayer]="true" [showHandToolButton]="true" [showUnverifiedSignatures]="true">
+                </ngx-extended-pdf-viewer>
+            </div>
+
+        </ng-template>
+
+        <ng-template #abpFooter>
+            <button type="button" class="btn btn-primary" (click)="finalizarTramite()" [disabled]="procesando">
+                <i class="fa fa-spinner fa-spin" *ngIf="procesando"></i>
+                <i class="fa fa-check-circle" aria-hidden="true" *ngIf="!procesando"></i>
+                {{'::Finalizar' | abpLocalization}}
+            </button>
+        </ng-template>
+
+    </div>
+
+    <div *ngIf="mostrarSectionFinalizar">
+
+        <ng-template #abpHeader>
+            <h3>Finalizado</h3>
+        </ng-template>
+
+        <ng-template #abpBody>
+            {{ mensajeFinalizado }}
+
+        </ng-template>
+
+        <ng-template #abpFooter>
+            <button type="button" class="btn btn-secondary" abpClose (click)="finalizarProceso()">
+                <i class="fa fa-times" aria-hidden="true"></i> {{ '::Salir' | abpLocalization }}
+            </button>
+        </ng-template>
+
+    </div>
+
+
+</abp-modal>

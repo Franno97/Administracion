@@ -1,0 +1,133 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col col-md-6">
+                <h5 class="card-title">
+                    {{ '::Menu:Feriados' | abpLocalization }} [{{unidadAdministrativaNombre}}]
+                </h5>
+            </div>
+            <div class="text-right col col-md-6">
+                <div class="text-lg-right pt-2">
+                    <button id="create" class="btn btn-primary" type="button" (click)="crear()">
+                        <i class="fa fa-plus mr-1"></i>
+                        <span>{{ '::New' | abpLocalization }}</span>
+                    </button>
+                    <button type="button" class="btn btn-secondary ml-2" routerLink="/citas/"><i
+                            class="fa fa-arrow-left" aria-hidden="true"></i>
+                        {{ '::Back' | abpLocalization }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+
+        <ngx-datatable [rows]="listaFeriado.items" [count]="listaFeriado.totalCount" [list]="servicioLista" default>
+
+
+            <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="150" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div ngbDropdown container="body" class="d-inline-block">
+                        <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" ngbDropdownToggle>
+                            <i class="fa fa-cog mr-1"></i>{{ '::Actions' | abpLocalization }}
+                        </button>
+                        <div ngbDropdownMenu>
+                            <button ngbDropdownItem (click)="editar(row.id)">
+                                {{ '::Edit' | abpLocalization }}
+                            </button>
+                            <button ngbDropdownItem (click)="eliminar(row.id)">
+                                {{ '::Delete' | abpLocalization }}
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column [name]="'Cita::Feriado:Descripcion' | abpLocalization" prop="descripcion">
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'Cita::Feriado:Inicio' | abpLocalization" prop="inicioTexto">
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'Cita::Feriado:Fin' | abpLocalization" prop="finTexto"></ngx-datatable-column>
+
+        </ngx-datatable>
+
+
+    </div>
+
+</div>
+
+<abp-modal size="md" [(visible)]="ventanaAbierta" [busy]="ventanaOcupada">
+    <ng-template #abpHeader>
+        <h3>{{ (feriadoSeleccionado.id ? '::Edit' : '::New') | abpLocalization }}</h3>
+    </ng-template>
+
+    <ng-template #abpBody>
+        <form id="editForm" [formGroup]="formulario" (ngSubmit)="guardar()">
+
+            <div class="form-group">
+                <label for="nombre">{{'Cita::Feriado:Descripcion' | abpLocalization}}:<small class="text-danger"> *
+                    </small></label>
+                <input type="Text" class="form-control" id="descripcion" formControlName="descripcion" />
+
+                <div *ngIf="formulario.controls['descripcion'].invalid && (formulario.controls['descripcion'].dirty || formulario.controls['descripcion'].touched || submitted)">
+
+                    <small class="text-danger" *ngIf="formulario.controls['descripcion'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="inicio">{{'Cita::Feriado:Inicio' | abpLocalization}}:<small class="text-danger"> *
+                    </small></label>
+                <input #datepickerstart="ngbDatepicker" [minDate]="minDate" class="form-control" formControlName="inicio" ngbDatepicker (click)="datepickerstart.toggle()" />
+                <div *ngIf="formulario.controls['inicio'].invalid && (formulario.controls['inicio'].dirty || formulario.controls['inicio'].touched || submitted)">
+
+                    <small class="text-danger" *ngIf="formulario.controls['inicio'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+
+                    <small class="text-danger" *ngIf="formulario.controls['inicio'].errors?.ngbDate?.invalid">
+                        {{
+                            '::RulesValidationMessage:FechaInvalida' | abpLocalization:formulario.controls['inicio'].errors?.ngbDate?.invalid
+                        }}
+                    </small>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="fin">{{'Cita::Feriado:Fin' | abpLocalization}}:<small class="text-danger"> *
+                    </small></label>
+                <input #datepickerend="ngbDatepicker" [minDate]="minDate" class="form-control" formControlName="fin" ngbDatepicker (click)="datepickerend.toggle()" />
+                <div *ngIf="formulario.controls['fin'].invalid && (formulario.controls['fin'].dirty || formulario.controls['fin'].touched || submitted)">
+
+                    <small class="text-danger" *ngIf="formulario.controls['fin'].errors?.required">
+                        {{'::RulesValidationMessage:Required' | abpLocalization }}
+                    </small>
+
+                    <small class="text-danger" *ngIf="formulario.controls['fin'].errors?.ngbDate?.invalid">
+                        {{
+                            '::RulesValidationMessage:FechaInvalida' | abpLocalization:formulario.controls['fin'].errors?.ngbDate?.invalid
+                        }}
+                    </small>
+                </div>
+
+            </div>
+
+        </form>
+    </ng-template>
+
+    <ng-template #abpFooter>
+
+        <button type="button" class="btn btn-secondary" #abpClose>
+            {{ '::Cancel' | abpLocalization }}
+        </button>
+
+        <abp-button iconClass="fa fa-check" (click)="guardar()">
+            {{'::Save' | abpLocalization}}
+        </abp-button>
+
+    </ng-template>
+</abp-modal>

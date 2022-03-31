@@ -1,0 +1,77 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col col-md-6">
+                <h5 class="card-title">
+                    {{ 'AdministrativeUnit::TariffHeadingService:Services' | abpLocalization }} [{{tariffName}}]
+                </h5>
+            </div>
+            <div class="text-right col col-md-6">
+                <div class="text-lg-right pt-2">
+                    <button description="create" class="btn btn-primary" type="button" (click)="addService()">
+            <i class="fa fa-plus mr-1"></i>
+            <span>{{ 'AdministrativeUnit::TariffHeadingService:AddService' | abpLocalization }}</span>
+          </button>
+                    <button type="button" class="btn btn-secondary ml-2" routerLink="/tariff/"><i class="fa fa-arrow-left"
+              aria-hidden="true"></i> {{ '::Back' | abpLocalization }}
+          </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <ngx-datatable [rows]="tariffHeadingServiceDto.items" [count]="tariffHeadingServiceDto.totalCount" [list]="list" default>
+            <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="200" [sortable]="false">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <div container="body" class="d-inline-block">
+                        <button class="btn btn-secondary btn-sm" (click)="removeService(row.servicioId)">
+              {{ 'AdministrativeUnit::TariffHeadingService:Remove' | abpLocalization }}
+            </button>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'AdministrativeUnit::TariffHeadingService:Service' | abpLocalization" prop="servicio">
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'AdministrativeUnit::TariffHeadingService:ServiceType' | abpLocalization" prop="tipoServicio">
+            </ngx-datatable-column>
+
+        </ngx-datatable>
+    </div>
+</div>
+
+<abp-modal size="md" [(visible)]="isModalOpen" [busy]="modalBusy">
+    <ng-template #abpHeader>
+        <h3>{{'AdministrativeUnit::TariffHeadingService:AddService' | abpLocalization }}</h3>
+    </ng-template>
+
+    <ng-template #abpBody>
+        <form id="editForm" [formGroup]="form" (ngSubmit)="save()">
+
+            <div class="form-group">
+                <label for="service-id">{{'AdministrativeUnit::TariffHeadingService:Service' | abpLocalization }}</label><small class="text-danger"> * </small>
+                <select class="form-control" id="service-id" formControlName="servicioId">
+          <option [ngValue]="null" disabled>{{'::SelectValue' | abpLocalization }}</option>
+          <option [ngValue]="c.id" *ngFor="let c of service"> {{ c.nombre }}</option>
+        </select>
+                <div *ngIf="form.controls['servicioId'].invalid && (form.controls['servicioId'].dirty || form.controls['servicioId'].touched || submitted)">
+                    <small class="text-danger" *ngIf="form.controls['servicioId'].errors?.required">
+            {{'::RulesValidationMessage:Required' | abpLocalization }}
+          </small>
+                </div>
+            </div>
+
+        </form>
+    </ng-template>
+
+    <ng-template #abpFooter>
+
+        <button type="button" class="btn btn-secondary" abpClose>
+      {{ '::Cancel' | abpLocalization }}
+    </button>
+
+        <abp-button iconClass="fa fa-check" (click)="save()">
+            {{'::Save' | abpLocalization}}
+        </abp-button>
+
+    </ng-template>
+</abp-modal>

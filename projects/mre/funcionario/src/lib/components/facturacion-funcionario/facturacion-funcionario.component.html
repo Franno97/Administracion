@@ -1,0 +1,80 @@
+<lib-form-template [formTitle]="formTitle" (clickedButtonClose)="onCloseModal()" hasButtonClose="true">
+    <div class="col" form-content>
+        <br>
+        <lib-datos-solicitante-shared [datosSolicitanteCompartido]="datosSolicitanteCompartido" *ngIf="visaTitular">
+        </lib-datos-solicitante-shared>
+        <lib-datos-beneficiario-shared [datosBeneficiarioCompartido]="datosBeneficiarioCompartido" hasConadis=true
+            [visaTitular]="visaTitular">
+        </lib-datos-beneficiario-shared>
+        <hr>
+        <!-- <lib-pago-facturacion-comprobantes [tabDataSource]="tabDataSource" pagoFacturacion=true>
+        </lib-pago-facturacion-comprobantes> -->
+
+        <div class="card-body mt-0">
+            <h3 class="card-title">Forma de pago</h3>
+
+            <ngx-datatable [rows]="registrosPagosMostrar"
+                [messages]="{emptyMessage: 'No existen registros a mostrar', totalMessage: 'Total'}" default>
+
+                <ngx-datatable-column [name]="'Descripción'" [sortable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.descripcion}}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [name]="'Nro Orden'" [sortable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.numeroOrden}}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [name]="'Nro Transacción'" [sortable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.numeroTransaccion}}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [name]="'Clave de Acceso'" [sortable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.claveAcceso}}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [name]="'Valor'" [sortable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        USD {{row.valor | number: '1.2-2'}}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [sortable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button type="button" class="btn btn-sm" *ngIf="row.puedeVerFactura" title="Ver factura"><i
+                                class="fas fa-eye" (click)="visualizarFactura(row)"></i></button>
+                    </ng-template>
+                </ngx-datatable-column>
+
+            </ngx-datatable>
+
+        </div>
+
+
+
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <lib-observaciones [observacionesName]="observacionesName" [observacionesModel]="observacionesModel"
+                    [observacionesAnteriores]="observacionesAnteriores" (observChange)="observChange($event)">
+                </lib-observaciones>
+            </div>
+            <div class="card-body">
+                <div class="row justify-content-end">
+                    <div class="form-group">
+                        <button class="btn btn-secondary botonAlign mr-1" (click)="cerrarFormulario()">Continuar</button>
+                        <button class="btn btn-primary botonAlign" (click)="onSubmit()"
+                            [disabled]="!habilitadoBotonGuardar">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</lib-form-template>
